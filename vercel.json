@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "name": "campbellnet-design-system",
-  "builds": [
-    { "src": "**/*.html", "use": "@vercel/static" },
-    { "src": "**/*.png", "use": "@vercel/static" },
-    { "src": "**/*.css", "use": "@vercel/static" }
-  ],
+  "name": "campbellnet-web",
   "routes": [
-    { "src": "/", "dest": "/index.html" }
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/services", "dest": "/services.html" },
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/support", "dest": "/support.html" },
+    { "src": "/design-system", "dest": "/design-system.html" }
   ]
 }

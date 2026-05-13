@@ -7,154 +7,10 @@
   <meta name="description" content="VoIP, enterprise WiFi, IP security cameras, and network infrastructure for businesses, schools, and municipalities from Buffalo to Albany.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
-    /* ============================================================
-       DESIGN TOKENS
-       ============================================================ */
-    :root {
-      --navy:        #1E2D78;
-      --navy-deep:   #141E52;
-      --navy-light:  #2E4099;
-      --slate:       #4A5568;
-      --slate-light: #718096;
-      --warm-white:  #F8F7F4;
-      --white:       #FFFFFF;
-      --steel:       #E8EDF5;
-      --amber:       #D4862A;
-      --amber-light: #E8A84E;
-      --font-display: 'Libre Baskerville', Georgia, serif;
-      --font-body:    'Source Sans 3', system-ui, sans-serif;
-      --radius:       6px;
-      --radius-btn:   4px;
-      --shadow:       0 2px 12px rgba(0,0,0,0.08);
-      --shadow-hover: 0 6px 24px rgba(0,0,0,0.13);
-      --max:          1200px;
-    }
-
-    /* ============================================================
-       RESET & BASE
-       ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: var(--font-body); color: var(--slate); background: var(--warm-white); line-height: 1.7; }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ============================================================
-       HEADER
-       ============================================================ */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: box-shadow 200ms;
-    }
-    .site-header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.12); }
-
-    .utility-bar {
-      background: var(--navy-deep);
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 0 40px;
-    }
-    .utility-bar a {
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.85);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 200ms;
-    }
-    .utility-bar a:hover { color: var(--amber-light); }
-
-    .nav-bar {
-      background: var(--white);
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-    }
-    .nav-logo img { height: 44px; width: auto; }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.95rem;
-      color: var(--slate);
-      position: relative;
-      padding-bottom: 3px;
-      transition: color 200ms;
-    }
-    .nav-links a:hover { color: var(--navy); }
-    .nav-links a.active { color: var(--navy); font-weight: 600; }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--amber);
-      border-radius: 1px;
-    }
-
-    .nav-right { display: flex; align-items: center; gap: 28px; }
-
-    /* ============================================================
-       BUTTONS
-       ============================================================ */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 12px 28px;
-      border-radius: var(--radius-btn);
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: all 200ms ease;
-      line-height: 1;
-    }
-    .btn-primary {
-      background: var(--amber);
-      color: white;
-      border-color: var(--amber);
-    }
-    .btn-primary:hover {
-      background: var(--amber-light);
-      border-color: var(--amber-light);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(212,134,42,0.3);
-    }
-    .btn-sm { padding: 10px 22px; font-size: 0.9rem; }
-    .btn-ghost-white {
-      background: transparent;
-      color: white;
-      border-color: rgba(255,255,255,0.65);
-    }
-    .btn-ghost-white:hover {
-      background: rgba(255,255,255,0.12);
-      border-color: white;
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--navy);
-      border-color: var(--navy);
-    }
-    .btn-ghost:hover { background: var(--navy); color: white; }
-
-    /* ============================================================
-       HERO
-       ============================================================ */
+    /* Homepage-specific styles */
     .hero {
       position: relative;
       min-height: 580px;
@@ -190,7 +46,6 @@
       width: 100%;
     }
     .hero-eyebrow {
-      font-family: var(--font-body);
       font-size: 0.75rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -216,117 +71,17 @@
     }
     .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
 
-    /* ============================================================
-       SECTIONS
-       ============================================================ */
-    section { padding: 80px 40px; }
-    .inner { max-width: var(--max); margin: 0 auto; }
-    .section-eyebrow {
-      display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 10px;
-    }
-    .section-head h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.25;
-      margin-bottom: 12px;
-    }
-    .section-head p {
-      color: var(--slate);
-      font-size: 1.05rem;
-      max-width: 560px;
-    }
-
-    /* ============================================================
-       SERVICES
-       ============================================================ */
-    .services-section { background: var(--warm-white); }
-    .services-intro {
-      max-width: var(--max);
-      margin: 0 auto 48px;
-    }
-    .services-intro p {
-      font-size: 1.05rem;
-      color: var(--slate);
-      max-width: 600px;
-      margin-top: 8px;
-    }
+    /* Services grid */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 28px;
       max-width: var(--max);
-      margin: 0 auto;
+      margin: 40px auto 0;
     }
-    .card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: box-shadow 200ms, transform 200ms;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: var(--amber);
-      transition: height 200ms;
-    }
-    .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-    .card:hover::before { height: 5px; }
-    .card-body { padding: 32px; display: flex; flex-direction: column; flex: 1; }
-    .card-icon {
-      width: 36px; height: 36px;
-      color: var(--navy);
-      margin-bottom: 18px;
-    }
-    .card h3 {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-    .card p {
-      color: var(--slate);
-      font-size: 0.95rem;
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 20px;
-    }
-    .card-link {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--amber);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: gap 200ms, color 200ms;
-      margin-top: auto;
-    }
-    .card-link:hover { gap: 10px; color: var(--amber-light); }
 
-    /* ============================================================
-       VERTICALS
-       ============================================================ */
-    .verticals-section {
-      background: var(--navy);
-      padding: 72px 40px;
-    }
-    .verticals-section .section-head h2 { color: white; }
-    .verticals-section .section-head p { color: rgba(255,255,255,0.75); max-width: 600px; }
-    .verticals-section .section-eyebrow { color: var(--amber-light); }
-
+    /* Verticals */
+    .verticals-section { background: var(--navy); padding: 72px 40px; }
     .verticals-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -335,29 +90,29 @@
       max-width: var(--max);
       margin: 0 auto;
     }
-    .verticals-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 36px;
+    .verticals-section .eyebrow { color: var(--amber-light); }
+    .verticals-section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 12px;
     }
+    .verticals-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 520px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .pill {
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 24px;
-      padding: 10px 20px;
+      padding: 9px 18px;
       color: white;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 200ms, border-color 200ms;
-      cursor: default;
     }
-    .pill:hover { background: rgba(255,255,255,0.18); border-color: var(--amber); }
     .pill-dot { width: 6px; height: 6px; background: var(--amber); border-radius: 50%; flex-shrink: 0; }
-
     .verticals-callout {
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.15);
@@ -370,17 +125,12 @@
       font-size: 1.1rem;
       color: white;
       line-height: 1.65;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .verticals-callout .attr {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.6);
-    }
+    .verticals-callout .attr { font-size: 0.875rem; color: rgba(255,255,255,0.55); }
 
-    /* ============================================================
-       TESTIMONIALS
-       ============================================================ */
-    .testimonials-section { background: var(--steel); }
+    /* Testimonials */
+    .testimonials-section { background: var(--steel); padding: 80px 40px; }
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -388,314 +138,116 @@
       max-width: var(--max);
       margin: 40px auto 0;
     }
-    .testimonial {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px;
-      box-shadow: var(--shadow);
-    }
-    .quote-mark {
-      font-family: var(--font-display);
-      font-size: 4.5rem;
-      color: var(--amber);
-      line-height: 0.7;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .testimonial blockquote {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1rem;
-      color: var(--navy);
-      line-height: 1.65;
-      margin-bottom: 20px;
-    }
-    .testimonial .attr {
-      font-size: 0.875rem;
-      color: var(--slate-light);
-      border-top: 1px solid var(--steel);
-      padding-top: 14px;
-    }
-    .testimonial .attr strong {
-      display: block;
-      color: var(--slate);
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
 
-    /* ============================================================
-       BOTTOM CTA BAND
-       ============================================================ */
-    .cta-band {
-      background: var(--white);
-      padding: 80px 40px;
-      text-align: center;
-    }
-    .cta-band h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 12px;
-    }
-    .cta-band p {
-      color: var(--slate);
-      font-size: 1.05rem;
-      max-width: 480px;
-      margin: 0 auto 32px;
-    }
-    .cta-band-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .cta-text-link {
-      font-size: 0.95rem;
-      color: var(--slate);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 200ms;
-    }
-    .cta-text-link:hover { color: var(--navy); }
+    /* CTA band */
+    .cta-band { background: var(--white); padding: 80px 40px; text-align: center; }
+    .cta-band h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .cta-band p { color: var(--slate); font-size: 1.05rem; max-width: 480px; margin: 0 auto 32px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; align-items: center; }
+    .text-link { font-size: 0.95rem; color: var(--slate); display: flex; align-items: center; gap: 5px; transition: color 200ms; }
+    .text-link:hover { color: var(--navy); }
 
-    /* ============================================================
-       FOOTER
-       ============================================================ */
-    .site-footer {
-      background: var(--navy-deep);
-      color: white;
-      padding: 64px 40px 0;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
-      gap: 48px;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding-bottom: 48px;
-    }
-    .footer-logo img {
-      height: 40px;
-      width: auto;
-      margin-bottom: 14px;
-      filter: brightness(0) invert(1);
-      opacity: 0.8;
-    }
-    .footer-tagline {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.65;
-      max-width: 260px;
-    }
-    .footer-col h4 {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 16px;
-    }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul a {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.65);
-      transition: color 200ms;
-    }
-    .footer-col ul a:hover { color: var(--amber-light); }
-
-    .footer-contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.65);
-    }
-    .footer-contact-item svg {
-      width: 15px; height: 15px;
-      stroke: var(--amber);
-      fill: none;
-      stroke-width: 1.5;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 20px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-bottom-copy {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.35);
-    }
-    .footer-support-link {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.45);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 200ms;
-    }
-    .footer-support-link:hover { color: var(--amber-light); }
-
-    /* ============================================================
-       SCROLL REVEAL
-       ============================================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 500ms ease, transform 500ms ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
     @media (max-width: 900px) {
-      section { padding: 48px 24px; }
-      .utility-bar, .nav-bar { padding: 0 24px; }
       .hero-content { padding: 72px 24px 96px; }
       .cards-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .verticals-layout { grid-template-columns: 1fr; gap: 32px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .nav-links, .nav-right .btn-primary { display: none; }
     }
-    @media (max-width: 600px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 1.8rem; }
-    }
-
-    /* SVG helpers */
-    .icon { width: 36px; height: 36px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .icon-sm { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .icon-xs { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; }
   </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       HEADER
-       ============================================================ -->
   <header class="site-header" id="site-header">
     <div class="utility-bar">
-      <a href="/support">
+      <a href="support.html">
         Customer Support
-        <svg class="icon-xs" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+        <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
     </div>
     <nav class="nav-bar">
-      <a href="/" class="nav-logo">
+      <a href="index.html" class="nav-logo">
         <img src="campbellnet-logo.png" alt="CampbellNet Solutions">
       </a>
       <div class="nav-right">
         <ul class="nav-links">
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
-        <a href="/contact" class="btn btn-primary btn-sm">Get a Free Assessment</a>
+        <a href="contact.html" class="btn btn-primary btn-sm">Get a Free Assessment</a>
       </div>
     </nav>
   </header>
 
-  <!-- ============================================================
-       HERO
-       ============================================================ -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <span class="hero-eyebrow">Upstate New York's IT Infrastructure Partner</span>
       <h1>Reliable Networks.<br>Local Expertise.<br>40 Years Running.</h1>
       <p class="hero-sub">VoIP, WiFi, IP security cameras, and the networks that run them — from Buffalo to Albany, built to last.</p>
       <div class="hero-ctas">
-        <a href="/contact" class="btn btn-primary">Get a Free Assessment</a>
-        <a href="/services" class="btn btn-ghost-white">Our Services</a>
+        <a href="contact.html" class="btn btn-primary">Get a Free Assessment</a>
+        <a href="services.html" class="btn btn-ghost-white">Our Services</a>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       SERVICES OVERVIEW
-       ============================================================ -->
-  <section class="services-section">
+  <!-- SERVICES OVERVIEW -->
+  <section style="background: var(--warm-white); padding: 80px 40px;">
     <div class="inner">
-      <div class="services-intro reveal">
-        <span class="section-eyebrow">What We Do</span>
-        <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: var(--navy); margin-bottom: 12px;">Built for the Infrastructure Everyone Else Ignores</h2>
-        <p>We handle the infrastructure most IT vendors treat as an afterthought — the switching, routing, cabling, and configuration that either makes everything work or makes everything fall apart.</p>
+      <div class="reveal">
+        <span class="eyebrow">What We Do</span>
+        <h2 class="section-title">Built for the Infrastructure Everyone Else Ignores</h2>
+        <p class="section-lead">We handle the infrastructure most IT vendors treat as an afterthought — the switching, routing, cabling, and configuration that either makes everything work or makes everything fall apart.</p>
       </div>
       <div class="cards-grid">
 
         <div class="card reveal">
           <div class="card-body">
-            <svg class="card-icon icon" viewBox="0 0 24 24">
-              <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
-              <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-              <circle cx="12" cy="20" r="1" fill="currentColor"/>
+            <svg class="card-icon" viewBox="0 0 24 24">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/>
             </svg>
             <h3>Wireless Networking</h3>
             <p>Fast, reliable WiFi that covers your entire facility — not just the conference room. Enterprise-grade hardware, designed for your floor plan.</p>
-            <a href="/services#wifi" class="card-link">
-              Learn more
-              <svg class="icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            <a href="services.html#wifi" class="card-link">Learn more <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
           </div>
         </div>
 
         <div class="card reveal">
           <div class="card-body">
-            <svg class="card-icon icon" viewBox="0 0 24 24">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            <svg class="card-icon" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
             <h3>Unified Communications / VoIP</h3>
             <p>Modern phone systems that move with your team. We handle the full rollout — from porting your existing numbers to call routing and conferencing.</p>
-            <a href="/services#voip" class="card-link">
-              Learn more
-              <svg class="icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            <a href="services.html#voip" class="card-link">Learn more <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
           </div>
         </div>
 
         <div class="card reveal">
           <div class="card-body">
-            <svg class="card-icon icon" viewBox="0 0 24 24">
+            <svg class="card-icon" viewBox="0 0 24 24">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
               <circle cx="12" cy="13" r="4"/>
             </svg>
             <h3>IP Security Cameras</h3>
             <p>HD video, remote access, and motion alerts — integrated with your network and configured so only the right people see the footage.</p>
-            <a href="/services#cameras" class="card-link">
-              Learn more
-              <svg class="icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            <a href="services.html#cameras" class="card-link">Learn more <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
           </div>
         </div>
 
         <div class="card reveal">
           <div class="card-body">
-            <svg class="card-icon icon" viewBox="0 0 24 24">
+            <svg class="card-icon" viewBox="0 0 24 24">
               <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
               <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
-              <line x1="6" y1="6" x2="6.01" y2="6"/>
-              <line x1="6" y1="18" x2="6.01" y2="18"/>
+              <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
             </svg>
             <h3>Network Infrastructure</h3>
             <p>The foundation everything else runs on. Switching, routing, and structured cabling done right the first time — and documented so you're never in the dark.</p>
-            <a href="/services#network" class="card-link">
-              Learn more
-              <svg class="icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+            <a href="services.html#network" class="card-link">Learn more <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
           </div>
         </div>
 
@@ -703,16 +255,14 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       VERTICALS / WHO WE SERVE
-       ============================================================ -->
-  <section class="verticals-section">
+  <!-- VERTICALS -->
+  <div class="verticals-section">
     <div class="verticals-layout">
       <div class="reveal">
-        <span class="section-eyebrow">Who We Serve</span>
-        <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: white; margin-bottom: 12px;">From School Districts to City Halls</h2>
-        <p style="color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 520px;">We've designed and maintained networks for K-12 schools, public libraries, municipal agencies, healthcare facilities, and businesses across upstate New York. Our clients often have lean IT teams managing a lot of ground — we're the specialized infrastructure partner that extends what they can do.</p>
-        <div class="verticals-pills">
+        <span class="eyebrow">Who We Serve</span>
+        <h2>From School Districts to City Halls</h2>
+        <p>We've designed and maintained networks for K-12 schools, public libraries, municipal agencies, healthcare facilities, and businesses across upstate New York. Our clients often have lean IT teams managing a lot of ground — we're the specialized infrastructure partner that extends what they can do.</p>
+        <div class="pills">
           <span class="pill"><span class="pill-dot"></span>K–12 Schools &amp; Districts</span>
           <span class="pill"><span class="pill-dot"></span>Public Libraries</span>
           <span class="pill"><span class="pill-dot"></span>Municipal Government</span>
@@ -725,103 +275,78 @@
         <span class="attr">IT Coordinator &nbsp;·&nbsp; Western NY School District</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ============================================================
-       TESTIMONIALS
-       ============================================================ -->
-  <section class="testimonials-section">
+  <!-- TESTIMONIALS -->
+  <div class="testimonials-section">
     <div class="inner">
-      <div class="section-head reveal">
-        <span class="section-eyebrow">What Clients Say</span>
-        <h2>Trusted Across Upstate New York</h2>
+      <div class="reveal">
+        <span class="eyebrow">What Clients Say</span>
+        <h2 class="section-title">Trusted Across Upstate New York</h2>
       </div>
       <div class="testimonials-grid">
-
         <div class="testimonial reveal">
           <span class="quote-mark">"</span>
           <blockquote>CampbellNet has been our network partner for over eight years. They know our buildings, they know our staff, and they show up when it matters.</blockquote>
-          <div class="attr">
-            <strong>Director of Technology</strong>
-            K–12 School District · Capital Region, NY
-          </div>
+          <div class="attr"><strong>Director of Technology</strong>K–12 School District · Capital Region, NY</div>
         </div>
-
         <div class="testimonial reveal">
           <span class="quote-mark">"</span>
           <blockquote>When we expanded to a second location, CampbellNet had everything designed, installed, and running before we even opened the doors.</blockquote>
-          <div class="attr">
-            <strong>Owner</strong>
-            Local Business · Western NY
-          </div>
+          <div class="attr"><strong>Owner</strong>Local Business · Western NY</div>
         </div>
-
         <div class="testimonial reveal">
           <span class="quote-mark">"</span>
           <blockquote>They're not just a vendor — they're genuinely invested in making sure our network runs. Our team knows exactly who to call and knows they'll actually pick up.</blockquote>
-          <div class="attr">
-            <strong>IT Coordinator</strong>
-            Municipal Agency · Upstate NY
-          </div>
+          <div class="attr"><strong>IT Coordinator</strong>Municipal Agency · Upstate NY</div>
         </div>
-
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ============================================================
-       BOTTOM CTA
-       ============================================================ -->
+  <!-- CTA BAND -->
   <div class="cta-band">
     <div class="inner">
       <h2 class="reveal">Let's talk about your network.</h2>
       <p class="reveal">Whether you're starting from scratch or fixing what someone else left behind, we can help.</p>
-      <div class="cta-band-actions reveal">
-        <a href="/contact" class="btn btn-primary">Contact Us</a>
-        <a href="/support" class="cta-text-link">
+      <div class="cta-actions reveal">
+        <a href="contact.html" class="btn btn-primary">Contact Us</a>
+        <a href="support.html" class="text-link">
           Existing customer? Get support
-          <svg class="icon-xs" style="stroke:currentColor;fill:none;stroke-width:1.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg class="icon icon-xs" style="stroke:currentColor;fill:none;stroke-width:1.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-grid">
-
       <div>
-        <div class="footer-logo">
-          <img src="campbellnet-logo.png" alt="CampbellNet Solutions">
-        </div>
+        <div class="footer-logo"><img src="campbellnet-logo.png" alt="CampbellNet Solutions"></div>
         <p class="footer-tagline">Professional networking services for upstate New York organizations. Proudly serving the region since 1984.</p>
       </div>
-
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="/services#wifi">Wireless Networking</a></li>
-          <li><a href="/services#voip">Unified Communications</a></li>
-          <li><a href="/services#cameras">IP Security Cameras</a></li>
-          <li><a href="/services#network">Network Infrastructure</a></li>
+          <li><a href="services.html#wifi">Wireless Networking</a></li>
+          <li><a href="services.html#voip">Unified Communications</a></li>
+          <li><a href="services.html#cameras">IP Security Cameras</a></li>
+          <li><a href="services.html#network">Network Infrastructure</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/support">Customer Support</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html">Customer Support</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Contact</h4>
         <div class="footer-contact-item">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           585-377-8910
         </div>
         <div class="footer-contact-item">
@@ -829,37 +354,22 @@
           Buffalo to Albany &amp; all of upstate NY
         </div>
       </div>
-
     </div>
     <div class="footer-bottom">
-      <span class="footer-bottom-copy">© 2026 CampbellNet Solutions. All rights reserved.</span>
-      <a href="/support" class="footer-support-link">
+      <span class="footer-copy">© 2026 CampbellNet Solutions. All rights reserved.</span>
+      <a href="support.html" class="footer-support">
         Customer Support
-        <svg class="icon-xs" style="stroke:currentColor;fill:none;stroke-width:1.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
     </div>
   </footer>
 
-  <!-- ============================================================
-       SCRIPTS
-       ============================================================ -->
   <script>
-    // Sticky header shadow on scroll
     const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
-
-    // Scroll reveal
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
+      entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); } });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
 
