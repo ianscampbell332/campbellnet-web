@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — CampbellNet Solutions</title>
+  <meta name="description" content="40 years of network engineering experience in upstate New York. CampbellNet Solutions — regional expertise, real relationships.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .story-section { background: var(--warm-white); }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .story-text h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: var(--navy); margin-bottom: 20px; }
+    .story-text p { color: var(--slate); line-height: 1.75; margin-bottom: 16px; }
+    .story-image { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-hover); }
+    .story-image img { width: 100%; height: 420px; object-fit: cover; }
+
+    .stats-band { background: var(--navy); padding: 56px 40px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: var(--max); margin: 0 auto; text-align: center; }
+    .stat-number { font-family: var(--font-display); font-size: 2.75rem; font-weight: 700; color: var(--amber); display: block; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+
+    .team-section { background: var(--white); }
+    .team-intro { max-width: var(--max); margin: 0 auto 48px; }
+
+    .region-section { background: var(--steel); }
+    .region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; max-width: var(--max); margin: 0 auto; }
+    .region-text h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .region-text p { color: var(--slate); line-height: 1.75; margin-bottom: 12px; }
+    .region-map { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: var(--steel); }
+    .region-map img { width: 100%; height: 380px; object-fit: cover; }
+
+    .placeholder-photo {
+      width: 100%;
+      height: 260px;
+      background: linear-gradient(135deg, var(--steel) 0%, #d4dce8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .placeholder-photo svg { width: 64px; height: 64px; stroke: #a0aec0; fill: none; stroke-width: 1; }
+
+    @media (max-width: 900px) {
+      .story-grid, .region-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="site-header">
+    <div class="utility-bar">
+      <a href="support.html">Customer Support <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-logo"><img src="campbellnet-logo.png" alt="CampbellNet Solutions"></a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary btn-sm">Get a Free Assessment</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="eyebrow">Our Story</span>
+      <h1>40 Years. One Region. Real Expertise.</h1>
+      <p>CampbellNet Solutions has been building and maintaining network infrastructure across upstate New York since before WiFi existed.</p>
+    </div>
+  </div>
+
+  <!-- STORY SECTION -->
+  <section class="story-section">
+    <div class="story-grid inner">
+      <div class="story-text reveal">
+        <h2>Not a Vendor. A Partner.</h2>
+        <p>CampbellNet Solutions was founded by Don Campbell, a network engineer who's been building and maintaining infrastructure across upstate New York since before WiFi existed. The company has grown steadily by doing one thing well: showing up, doing the work, and being easy to reach when something needs attention.</p>
+        <p>We're not a national MSP that treats Buffalo like a market segment. We're a regional team that knows the school districts, the municipalities, the hospitals, and the businesses we serve — often by name. When you call us, you get someone who knows your network.</p>
+        <p>Our focus is the upstate New York corridor — Buffalo east to Albany, north through the Adirondacks, and everywhere in between. If your organization is in this region, we're your neighbors.</p>
+      </div>
+      <div class="story-image reveal">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="Professional team meeting">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <div class="stats-band">
+    <div class="stats-grid">
+      <div class="reveal">
+        <span class="stat-number">40+</span>
+        <span class="stat-label">Years in Business</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Networks Deployed</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Verticals Served</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-number">400mi</span>
+        <span class="stat-label">Service Corridor</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM SECTION -->
+  <section class="team-section">
+    <div class="inner">
+      <div class="team-intro reveal">
+        <span class="eyebrow">The Team</span>
+        <h2 class="section-title">The People Behind the Networks</h2>
+        <p class="section-lead">A small team with deep experience — and real accountability. When something needs attention, you're talking to the people who actually know your setup.</p>
+      </div>
+      <div class="team-grid">
+
+        <div class="team-card reveal">
+          <div class="placeholder-photo">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="team-card-info">
+            <h3>Don Campbell</h3>
+            <span class="role">Founder &amp; Senior Network Engineer</span>
+            <p>Bio coming soon. Don has 40+ years of hands-on network engineering experience across upstate New York, working with schools, municipalities, healthcare organizations, and businesses of all sizes.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="placeholder-photo">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="team-card-info">
+            <h3>Brian Chavanne</h3>
+            <span class="role">Title / Role — Confirmation Pending</span>
+            <p>Bio coming soon.</p>
+          </div>
+        </div>
+
+        <div class="team-card reveal">
+          <div class="placeholder-photo">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="team-card-info">
+            <h3>Bonnie Haley</h3>
+            <span class="role">Office Manager</span>
+            <p>Bio coming soon.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- REGION SECTION -->
+  <section class="region-section">
+    <div class="region-grid inner">
+      <div class="region-text reveal">
+        <span class="eyebrow">Our Region</span>
+        <h2>We Know Upstate New York</h2>
+        <p>Our service corridor runs from Buffalo east to Albany, north through the Adirondacks, and throughout the Capital Region. This is our backyard — we know the infrastructure realities, the geography, and the organizations that operate here.</p>
+        <p>Southern Tier and Greater NYC have plenty of vendors. Upstate NY organizations deserve a specialist who's actually local. That's us.</p>
+        <div style="margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px;">
+          <span style="background: var(--white); border: 1px solid #cbd5e0; border-radius: 20px; padding: 7px 16px; font-size: 0.875rem; font-weight: 600; color: var(--slate);">Buffalo / Western NY</span>
+          <span style="background: var(--white); border: 1px solid #cbd5e0; border-radius: 20px; padding: 7px 16px; font-size: 0.875rem; font-weight: 600; color: var(--slate);">Rochester</span>
+          <span style="background: var(--white); border: 1px solid #cbd5e0; border-radius: 20px; padding: 7px 16px; font-size: 0.875rem; font-weight: 600; color: var(--slate);">Syracuse</span>
+          <span style="background: var(--white); border: 1px solid #cbd5e0; border-radius: 20px; padding: 7px 16px; font-size: 0.875rem; font-weight: 600; color: var(--slate);">Capital Region / Albany</span>
+          <span style="background: var(--white); border: 1px solid #cbd5e0; border-radius: 20px; padding: 7px 16px; font-size: 0.875rem; font-weight: 600; color: var(--slate);">Adirondacks / North Country</span>
+        </div>
+      </div>
+      <div class="region-map reveal">
+        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80" alt="Upstate New York">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="inner">
+      <h2 class="reveal">Let's talk about your network.</h2>
+      <p class="reveal">Whether you're starting from scratch or fixing what someone else left behind, we can help.</p>
+      <div class="cta-band-actions reveal">
+        <a href="contact.html" class="btn btn-primary">Contact Us</a>
+        <a href="support.html" class="text-link">Existing customer? Get support <svg class="icon icon-xs" style="stroke:currentColor;fill:none;stroke-width:1.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="campbellnet-logo.png" alt="CampbellNet Solutions"></div>
+        <p class="footer-tagline">Professional networking services for upstate New York organizations. Proudly serving the region since 1984.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#wifi">Wireless Networking</a></li>
+          <li><a href="services.html#voip">Unified Communications</a></li>
+          <li><a href="services.html#cameras">IP Security Cameras</a></li>
+          <li><a href="services.html#network">Network Infrastructure</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html">Customer Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          585-377-8910
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Buffalo to Albany &amp; all of upstate NY
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 CampbellNet Solutions. All rights reserved.</span>
+      <a href="support.html" class="footer-support">Customer Support <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support — CampbellNet Solutions</title>
+  <meta name="description" content="Existing CampbellNet customers: access the support portal, submit a ticket, or reach us by phone or email.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .support-center {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .support-center h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .support-center .lead {
+      font-size: 1.1rem;
+      color: var(--slate);
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+    .portal-card {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 48px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .portal-card h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .portal-card p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+      max-width: 380px;
+      margin: 0 auto 28px;
+      line-height: 1.65;
+    }
+    .contact-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .contact-option-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-option-icon {
+      width: 40px; height: 40px;
+      background: rgba(212,134,42,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-option-icon svg { width: 18px; height: 18px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
+    .contact-option-card h3 { font-size: 0.875rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .contact-option-card a, .contact-option-card p { font-size: 0.95rem; color: var(--slate); }
+    .contact-option-card a { color: var(--navy); font-weight: 600; }
+    .contact-option-card a:hover { color: var(--amber); }
+
+    .new-customer-note {
+      background: var(--steel);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-size: 0.875rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+    .new-customer-note a { color: var(--navy); font-weight: 600; text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .contact-options { grid-template-columns: 1fr; }
+      .support-center { padding: 48px 24px; }
+      .portal-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="site-header">
+    <div class="utility-bar">
+      <a href="support.html">Customer Support <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-logo"><img src="campbellnet-logo.png" alt="CampbellNet Solutions"></a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary btn-sm">Get a Free Assessment</a>
+      </div>
+    </nav>
+  </header>
+
+  <section style="background: var(--warm-white); padding: 0;">
+    <div class="support-center">
+
+      <span class="eyebrow" style="justify-content: center; display: block; text-align: center; margin-bottom: 10px;">Existing Customers</span>
+      <h1>Need Help? We've Got You.</h1>
+      <p class="lead">If you're an existing CampbellNet customer and need to submit a support ticket, request service, or check the status of an open issue, you're in the right place.</p>
+
+      <!-- PORTAL CTA -->
+      <div class="portal-card reveal">
+        <h2>Access the Customer Portal</h2>
+        <p>Submit tickets, track open issues, and manage your service requests — all in one place.</p>
+        <!-- Update this href to the actual Mission Suite portal URL -->
+        <a href="#" class="btn btn-primary">Open Customer Portal →</a>
+      </div>
+
+      <!-- CONTACT OPTIONS -->
+      <div class="contact-options reveal">
+        <div class="contact-option-card">
+          <div class="contact-option-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <h3>Phone</h3>
+            <a href="tel:5853778910">585-377-8910</a>
+          </div>
+        </div>
+        <div class="contact-option-card">
+          <div class="contact-option-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h3>Email</h3>
+            <!-- Update to confirmed support email -->
+            <a href="mailto:support@campbellnetsolutions.com">support@campbellnetsolutions.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW CUSTOMER NOTE -->
+      <div class="new-customer-note reveal">
+        Not a current customer? Head to our <a href="contact.html">Contact page</a> to get in touch about starting a new project or getting a free assessment.
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="campbellnet-logo.png" alt="CampbellNet Solutions"></div>
+        <p class="footer-tagline">Professional networking services for upstate New York organizations. Proudly serving the region since 1984.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#wifi">Wireless Networking</a></li>
+          <li><a href="services.html#voip">Unified Communications</a></li>
+          <li><a href="services.html#cameras">IP Security Cameras</a></li>
+          <li><a href="services.html#network">Network Infrastructure</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="support.html">Customer Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          585-377-8910
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Buffalo to Albany &amp; all of upstate NY
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 CampbellNet Solutions. All rights reserved.</span>
+      <a href="support.html" class="footer-support">Customer Support <svg class="icon icon-xs" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
