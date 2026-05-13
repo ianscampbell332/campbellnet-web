@@ -96,11 +96,10 @@ h1, h2, h3 { line-height: 1.2; }
 
 .utility-bar {
   background: var(--navy-deep);
-  height: 36px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 40px;
+  padding: 8px 40px;
 }
 .utility-bar a {
   font-size: 0.875rem;
@@ -287,14 +286,6 @@ h1, h2, h3 { line-height: 1.2; }
   margin: 0 auto;
   padding-bottom: 48px;
 }
-.footer-logo {
-  display: inline-block;
-  background: white;
-  padding: 8px 14px;
-  border-radius: var(--radius-btn);
-  margin-bottom: 16px;
-}
-.footer-logo img { height: 38px; width: auto; display: block; }
 .footer-tagline { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; max-width: 260px; }
 .footer-col h4 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
 .footer-col li { margin-bottom: 10px; }
