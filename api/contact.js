@@ -71,9 +71,8 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true });
     }
 
-    // Log the full MS response server-side for debugging, don't expose to client
     console.error('Mission Suite error response:', text);
-    return res.status(502).json({ error: 'Could not save your submission. Please try calling us directly.' });
+    return res.status(502).json({ error: 'Mission Suite error', detail: text });
 
   } catch (err) {
     console.error('Mission Suite fetch failed:', err);

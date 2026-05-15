@@ -289,13 +289,14 @@
       btn.textContent = 'Sending…';
       feedback.style.display = 'none';
 
+      let data = null;
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        const data = await res.json();
+        data = await res.json();
 
         if (res.ok && data.success) {
           feedback.style.background = 'rgba(34,139,34,0.08)';
@@ -310,7 +311,8 @@
         feedback.style.background = 'rgba(180,30,30,0.06)';
         feedback.style.border = '1px solid rgba(180,30,30,0.2)';
         feedback.style.color = 'var(--slate)';
-        feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + (err.message || 'Please try again or call us at 585-377-8910.');
+        feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + (err.message || 'Please try again or call us at 585-377-8910.')
+          + (data && data.detail ? '<br><pre style="margin-top:8px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + data.detail + '</pre>' : '');
       }
 
       feedback.style.display = 'block';
