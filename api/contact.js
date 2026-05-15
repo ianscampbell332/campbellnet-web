@@ -45,7 +45,9 @@ export default async function handler(req, res) {
         <UserDefinedField fieldname="Service Interest">${esc(serviceInterest)}</UserDefinedField>
       </UserDefinedFields>
       <Groups>
-        <Group>${esc(process.env.MISSION_SUITE_CONTACT_FORM_GROUP)}</Group>
+        <Group>
+          <Group_id>${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}</Group_id>
+        </Group>
       </Groups>
       <WorkflowID>${process.env.MISSION_SUITE_CONTACT_WORKFLOW_ID}</WorkflowID>
     </Contact>
