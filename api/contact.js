@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
   const xml = `<AddContactsRequest update="true">
   <Contacts>
-    <Contact>
+    <Contact account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}">
       <Firstname>${esc(name_first)}</Firstname>
       <Lastname>${esc(name_last)}</Lastname>
       <Company>${esc(organization)}</Company>
