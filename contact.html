@@ -313,7 +313,8 @@
         feedback.style.color = 'var(--slate)';
         const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + escHtml(err.message || 'Please try again or call us at 585-377-8910.')
-          + (data && data.detail ? '<br><pre style="margin-top:8px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + escHtml(data.detail) + '</pre>' : '');
+          + (data && data.detail ? '<br><pre style="margin-top:8px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + escHtml(data.detail) + '</pre>' : '')
+          + (data && data.sentXml ? '<br><strong>Sent XML:</strong><pre style="margin-top:4px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + escHtml(data.sentXml) + '</pre>' : '');
       }
 
       feedback.style.display = 'block';

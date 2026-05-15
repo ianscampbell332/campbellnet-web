@@ -45,9 +45,7 @@ export default async function handler(req, res) {
         <UserDefinedField fieldname="Service Interest">${esc(serviceInterest)}</UserDefinedField>
       </UserDefinedFields>
       <Groups>
-        <Group>
-          <Group_id>${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}</Group_id>
-        </Group>
+        <Group_id>${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}</Group_id>
       </Groups>
       <WorkflowID>${process.env.MISSION_SUITE_CONTACT_WORKFLOW_ID}</WorkflowID>
     </Contact>
@@ -74,7 +72,7 @@ export default async function handler(req, res) {
     }
 
     console.error('Mission Suite error response:', text);
-    return res.status(502).json({ error: 'Mission Suite error', detail: text || '(empty response body)' });
+    return res.status(502).json({ error: 'Mission Suite error', detail: text || '(empty response body)', sentXml: xml });
 
   } catch (err) {
     console.error('Mission Suite fetch failed:', err);
