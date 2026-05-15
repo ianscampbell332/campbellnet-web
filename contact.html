@@ -105,13 +105,19 @@
       <div class="reveal">
         <div class="form-card">
           <h2 style="font-family: var(--font-display); font-size: 1.375rem; color: var(--navy); margin-bottom: 28px;">Tell us about your project</h2>
-          <form action="#" method="POST">
+          <form id="contact-form">
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Name <span style="color:var(--amber)">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                <label for="name_first">First Name <span style="color:var(--amber)">*</span></label>
+                <input type="text" id="name_first" name="name_first" placeholder="Jane" required>
               </div>
               <div class="form-group">
+                <label for="name_last">Last Name <span style="color:var(--amber)">*</span></label>
+                <input type="text" id="name_last" name="name_last" placeholder="Smith" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full">
                 <label for="org">Organization <span style="color:var(--amber)">*</span></label>
                 <input type="text" id="org" name="organization" placeholder="Albany City Schools" required>
               </div>
@@ -152,9 +158,10 @@
               </div>
             </div>
             <div class="form-submit-row">
-              <button type="submit" class="btn btn-primary">Send Message</button>
+              <button type="submit" id="contact-submit" class="btn btn-primary">Send Message</button>
               <span class="form-note">We'll get back to you within one business day.</span>
             </div>
+            <div id="form-feedback" style="display:none; margin-top: 20px; padding: 16px 20px; border-radius: var(--radius); font-size: 0.95rem; line-height: 1.5;"></div>
           </form>
         </div>
       </div>
@@ -256,6 +263,60 @@
       entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Contact form submission
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('contact-submit');
+      const feedback = document.getElementById('form-feedback');
+
+      // Collect checked services
+      const services = Array.from(form.querySelectorAll('input[name="service"]:checked')).map(el => el.value);
+
+      const payload = {
+        name_first:   form.name_first.value.trim(),
+        name_last:    form.name_last.value.trim(),
+        organization: form.organization.value.trim(),
+        email:        form.email.value.trim(),
+        phone:        form.phone.value.trim(),
+        location:     form.location.value.trim(),
+        service:      services,
+        message:      form.message.value.trim(),
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      feedback.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          feedback.style.background = 'rgba(34,139,34,0.08)';
+          feedback.style.border = '1px solid rgba(34,139,34,0.25)';
+          feedback.style.color = 'var(--slate)';
+          feedback.innerHTML = '<strong style="color:#2d6a2d">Message received.</strong> We\'ll be in touch within one business day.';
+          form.reset();
+        } else {
+          throw new Error(data.error || 'Unknown error');
+        }
+      } catch (err) {
+        feedback.style.background = 'rgba(180,30,30,0.06)';
+        feedback.style.border = '1px solid rgba(180,30,30,0.2)';
+        feedback.style.color = 'var(--slate)';
+        feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + (err.message || 'Please try again or call us at 585-377-8910.');
+      }
+
+      feedback.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    });
   </script>
 </body>
 </html>
