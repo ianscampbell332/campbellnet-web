@@ -311,8 +311,9 @@
         feedback.style.background = 'rgba(180,30,30,0.06)';
         feedback.style.border = '1px solid rgba(180,30,30,0.2)';
         feedback.style.color = 'var(--slate)';
-        feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + (err.message || 'Please try again or call us at 585-377-8910.')
-          + (data && data.detail ? '<br><pre style="margin-top:8px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + data.detail + '</pre>' : '');
+        const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        feedback.innerHTML = '<strong style="color:#8b1a1a">Something went wrong.</strong> ' + escHtml(err.message || 'Please try again or call us at 585-377-8910.')
+          + (data && data.detail ? '<br><pre style="margin-top:8px;font-size:0.75rem;white-space:pre-wrap;word-break:break-all;">' + escHtml(data.detail) + '</pre>' : '');
       }
 
       feedback.style.display = 'block';

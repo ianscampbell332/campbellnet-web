@@ -72,7 +72,7 @@ export default async function handler(req, res) {
     }
 
     console.error('Mission Suite error response:', text);
-    return res.status(502).json({ error: 'Mission Suite error', detail: text });
+    return res.status(502).json({ error: 'Mission Suite error', detail: text || '(empty response body)' });
 
   } catch (err) {
     console.error('Mission Suite fetch failed:', err);
