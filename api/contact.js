@@ -54,7 +54,7 @@ export default async function handler(req, res) {
 
   const body = new URLSearchParams({
     email: process.env.MISSION_SUITE_USER,
-    token: process.env.MISSION_SUITE_AUTH_TOKEN,
+    auth_token: process.env.MISSION_SUITE_AUTH_TOKEN,
     xml,
   });
 
