@@ -5,11 +5,32 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name_first, name_last, organization, email, phone, location, service, message } = req.body;
+  const { name_first, name_last, organization, email, phone, location, service, message, website, form_loaded_at } = req.body;
 
   // Basic validation
   if (!name_first || !name_last || !organization || !email) {
     return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  // Honeypot check — bots fill hidden fields, humans don't
+  if (website) {
+    console.warn('Honeypot triggered:', { email, website });
+    await notifyAdmin({
+      subject: 'CampbellNet contact form — spam detected (honeypot)',
+      text: `A form submission was blocked by the honeypot filter.\n\nHoneypot value: ${website}\nEmail: ${email}\nName: ${name_first} ${name_last}\nOrg: ${organization}`,
+    });
+    return res.status(200).json({ success: true });
+  }
+
+  // Timing check — legitimate users take more than 5 seconds to fill out a form
+  const elapsed = Date.now() - parseInt(form_loaded_at || '0', 10);
+  if (elapsed < 5000) {
+    console.warn('Timing check failed:', { elapsed, email });
+    await notifyAdmin({
+      subject: 'CampbellNet contact form — spam detected (too fast)',
+      text: `A form submission was blocked because it was submitted in ${(elapsed / 1000).toFixed(1)}s.\n\nEmail: ${email}\nName: ${name_first} ${name_last}\nOrg: ${organization}`,
+    });
+    return res.status(200).json({ success: true });
   }
 
   // Map checkbox values to readable labels

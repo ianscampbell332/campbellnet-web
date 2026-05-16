@@ -106,6 +106,13 @@
         <div class="form-card">
           <h2 style="font-family: var(--font-display); font-size: 1.375rem; color: var(--navy); margin-bottom: 28px;">Tell us about your project</h2>
           <form id="contact-form">
+            <!-- Honeypot: hidden from real users, bots fill it in -->
+            <div style="display:none" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <!-- Timestamp: used to detect instant/bot submissions -->
+            <input type="hidden" name="form_loaded_at" id="form_loaded_at">
             <div class="form-row">
               <div class="form-group">
                 <label for="name_first">First Name <span style="color:var(--amber)">*</span></label>
@@ -264,6 +271,9 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    // Stamp the form load time for bot timing detection
+    document.getElementById('form_loaded_at').value = Date.now();
+
     // Contact form submission
     document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -275,14 +285,16 @@
       const services = Array.from(form.querySelectorAll('input[name="service"]:checked')).map(el => el.value);
 
       const payload = {
-        name_first:   form.name_first.value.trim(),
-        name_last:    form.name_last.value.trim(),
-        organization: form.organization.value.trim(),
-        email:        form.email.value.trim(),
-        phone:        form.phone.value.trim(),
-        location:     form.location.value.trim(),
-        service:      services,
-        message:      form.message.value.trim(),
+        name_first:      form.name_first.value.trim(),
+        name_last:       form.name_last.value.trim(),
+        organization:    form.organization.value.trim(),
+        email:           form.email.value.trim(),
+        phone:           form.phone.value.trim(),
+        location:        form.location.value.trim(),
+        service:         services,
+        message:         form.message.value.trim(),
+        website:         form.website.value,
+        form_loaded_at:  form.form_loaded_at.value,
       };
 
       btn.disabled = true;
