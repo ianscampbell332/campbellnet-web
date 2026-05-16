@@ -4,16 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Support — CampbellNet Solutions</title>
-  <meta name="description" content="Existing CampbellNet customers: access the support portal, submit a ticket, or reach us by phone or email.">
+  <meta name="description" content="CampbellNet customer portal — sign in to view and manage your support tickets.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+
+    /* ── Auth / landing section ─────────────────────────────────────────── */
+    #support-section {
+      background: var(--warm-white);
+      padding: 0;
+    }
     .support-center {
-      max-width: 720px;
+      max-width: 520px;
       margin: 0 auto;
-      padding: 80px 40px;
+      padding: 80px 24px 64px;
       text-align: center;
     }
     .support-center h1 {
@@ -24,77 +30,277 @@
       margin-bottom: 16px;
     }
     .support-center .lead {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--slate);
-      max-width: 500px;
-      margin: 0 auto 48px;
+      margin: 0 auto 40px;
       line-height: 1.7;
     }
-    .portal-card {
-      background: var(--navy);
-      border-radius: var(--radius);
-      padding: 48px;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-    .portal-card h2 {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: white;
-      margin-bottom: 12px;
-    }
-    .portal-card p {
-      color: rgba(255,255,255,0.75);
-      font-size: 0.95rem;
-      max-width: 380px;
-      margin: 0 auto 28px;
-      line-height: 1.65;
-    }
-    .contact-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      text-align: left;
-      margin-bottom: 32px;
-    }
-    .contact-option-card {
+
+    /* Auth card */
+    .auth-card {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 36px 40px;
       box-shadow: var(--shadow);
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
+      text-align: left;
+      margin-bottom: 20px;
     }
-    .contact-option-icon {
-      width: 40px; height: 40px;
-      background: rgba(212,134,42,0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    .auth-field { margin-bottom: 16px; }
+    .auth-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+      margin-bottom: 6px;
     }
-    .contact-option-icon svg { width: 18px; height: 18px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
-    .contact-option-card h3 { font-size: 0.875rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .contact-option-card a, .contact-option-card p { font-size: 0.95rem; color: var(--slate); }
-    .contact-option-card a { color: var(--navy); font-weight: 600; }
-    .contact-option-card a:hover { color: var(--amber); }
-
+    .auth-field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #d0d5e0;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--navy);
+      background: var(--white);
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .auth-field input:focus { outline: none; border-color: var(--navy); }
+    .auth-error {
+      color: #c0392b;
+      font-size: 0.875rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .auth-lead {
+      font-size: 0.95rem;
+      color: var(--slate);
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+    .auth-back {
+      background: none;
+      border: none;
+      color: var(--slate);
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      margin-top: 12px;
+      display: block;
+      text-align: center;
+    }
+    .auth-back:hover { color: var(--navy); }
+    .otp-input {
+      font-size: 2rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.3em;
+      text-align: center;
+    }
     .new-customer-note {
       background: var(--steel);
       border-radius: var(--radius);
-      padding: 20px 24px;
+      padding: 16px 20px;
       font-size: 0.875rem;
       color: var(--slate);
       line-height: 1.6;
+      text-align: left;
     }
     .new-customer-note a { color: var(--navy); font-weight: 600; text-decoration: underline; }
 
-    @media (max-width: 600px) {
-      .contact-options { grid-template-columns: 1fr; }
-      .support-center { padding: 48px 24px; }
-      .portal-card { padding: 32px 24px; }
+    @media (max-width: 580px) {
+      .support-center { padding: 48px 16px 48px; }
+      .auth-card { padding: 24px 20px; }
+    }
+
+    /* ── Portal tabs ────────────────────────────────────────────────────── */
+    .portal-nav {
+      background: var(--white);
+      border-bottom: 1px solid #e5e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .portal-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .portal-tabs { display: flex; }
+    .portal-tab {
+      padding: 16px 18px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--slate);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .portal-tab:hover { color: var(--navy); }
+    .portal-tab.active { color: var(--navy); border-bottom-color: var(--amber); }
+    .portal-user {
+      font-size: 0.8rem;
+      color: var(--slate);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .portal-user-email { display: none; }
+    @media (min-width: 620px) { .portal-user-email { display: inline; } }
+    .btn-logout {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--slate);
+      background: none;
+      border: 1px solid #d0d5e0;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-logout:hover { color: var(--navy); border-color: var(--navy); }
+
+    /* ── Portal content ─────────────────────────────────────────────────── */
+    #portal { background: var(--warm-white); min-height: 60vh; }
+    .portal-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .portal-panel { display: none; }
+    .portal-panel.active { display: block; }
+
+    /* ── Ticket list ────────────────────────────────────────────────────── */
+    .ticket-list-h {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin: 0 0 16px;
+    }
+    .category-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .category-pill {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1.5px solid #d0d5e0;
+      background: var(--white);
+      color: var(--slate);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .category-pill:hover { border-color: var(--navy); color: var(--navy); }
+    .category-pill.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+    .ticket-list { display: flex; flex-direction: column; gap: 12px; }
+    .ticket-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 16px;
+      align-items: center;
+    }
+    .ticket-card:hover { box-shadow: 0 4px 20px rgba(30,45,120,0.12); transform: translateY(-1px); }
+    .ticket-card-summary { font-weight: 600; color: var(--navy); font-size: 0.95rem; line-height: 1.4; grid-column: 1; }
+    .ticket-card-meta { font-size: 0.8rem; color: var(--slate); grid-column: 1; }
+    .ticket-card-badge { grid-column: 2; grid-row: 1 / 3; align-self: center; justify-self: end; }
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+    .status-open      { background: #e8f5e9; color: #2e7d32; }
+    .status-escalated { background: #fff3e0; color: #e65100; }
+    .status-closed    { background: #f5f5f5; color: #757575; }
+
+    .ticket-empty { text-align: center; padding: 48px 24px; color: var(--slate); font-size: 0.9rem; }
+
+    /* ── Ticket detail ──────────────────────────────────────────────────── */
+    .detail-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.875rem; font-weight: 600; color: var(--slate);
+      background: none; border: none; cursor: pointer; padding: 0;
+      margin-bottom: 24px; transition: color 0.15s;
+    }
+    .detail-back:hover { color: var(--navy); }
+    .detail-back svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .detail-header h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--navy); margin: 0 0 10px; line-height: 1.4; }
+    .detail-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.825rem; color: var(--slate); align-items: center; margin-bottom: 24px; }
+    .detail-meta strong { color: var(--navy); }
+
+    .thread { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .thread-item { background: var(--white); border-radius: var(--radius); padding: 18px 22px; box-shadow: var(--shadow); }
+    .thread-item.from-customer { border-left: 3px solid var(--amber); }
+    .thread-item.from-cns      { border-left: 3px solid var(--navy); }
+    .thread-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 4px; }
+    .thread-author { font-weight: 700; font-size: 0.875rem; color: var(--navy); }
+    .thread-time   { font-size: 0.8rem; color: var(--slate); }
+    .thread-content { font-size: 0.925rem; line-height: 1.65; color: #333; }
+    .thread-content p { margin: 0 0 8px; }
+    .thread-content p:last-child { margin-bottom: 0; }
+
+    .reply-form { background: var(--white); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+    .reply-form h3 { font-family: var(--font-display); font-size: 1rem; color: var(--navy); margin: 0 0 12px; }
+    .reply-form textarea {
+      width: 100%; min-height: 100px; padding: 11px 14px;
+      border: 1.5px solid #d0d5e0; border-radius: 6px;
+      font-family: var(--font-body); font-size: 0.95rem; color: var(--navy);
+      resize: vertical; box-sizing: border-box; transition: border-color 0.15s;
+    }
+    .reply-form textarea:focus { outline: none; border-color: var(--navy); }
+    .reply-form-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
+    .reply-note { background: #f5f7fb; border-radius: 6px; padding: 12px 16px; font-size: 0.825rem; color: var(--slate); margin-top: 14px; line-height: 1.6; }
+
+    /* ── File a ticket ──────────────────────────────────────────────────── */
+    .file-ticket-wrap { max-width: 640px; }
+    .file-ticket-wrap h2 { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); margin: 0 0 6px; }
+    .file-ticket-wrap .lead { color: var(--slate); margin-bottom: 24px; line-height: 1.6; font-size: 1rem; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--navy); margin-bottom: 6px; }
+    .form-group select, .form-group input[type="text"], .form-group textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid #d0d5e0; border-radius: 6px;
+      font-family: var(--font-body); font-size: 0.95rem; color: var(--navy);
+      background: var(--white); box-sizing: border-box; transition: border-color 0.15s;
+    }
+    .form-group select:focus, .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--navy); }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-error { color: #c0392b; font-size: 0.875rem; margin-bottom: 14px; display: none; }
+    .form-success { background: #e8f5e9; border-radius: var(--radius); padding: 24px; text-align: center; display: none; }
+    .form-success h3 { font-family: var(--font-display); color: #2e7d32; margin: 0 0 8px; }
+    .form-success p { color: #388e3c; margin: 0 0 16px; }
+
+    /* ── Knowledge base ─────────────────────────────────────────────────── */
+    .kb-header { margin-bottom: 20px; }
+    .kb-header h2 { font-family: var(--font-display); font-size: 1.4rem; color: var(--navy); margin: 0 0 6px; }
+    .kb-header p { color: var(--slate); margin: 0; line-height: 1.6; }
+    .kb-list { display: flex; flex-direction: column; gap: 12px; }
+    .kb-card { background: var(--white); border-radius: var(--radius); padding: 18px 22px; box-shadow: var(--shadow); }
+    .kb-card h3 { font-size: 1rem; color: var(--navy); margin: 0 0 4px; }
+    .kb-card-meta { font-size: 0.8rem; color: var(--slate); margin-bottom: 8px; }
+    .kb-card p { font-size: 0.9rem; color: #444; margin: 0; line-height: 1.6; }
+    .kb-empty { text-align: center; padding: 48px 24px; color: var(--slate); font-size: 0.9rem; }
+
+    /* ── Shared loading state ───────────────────────────────────────────── */
+    .loading { text-align: center; padding: 48px 24px; color: var(--slate); font-size: 0.9rem; }
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid #d0d5e0; border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 580px) {
+      .portal-tab { padding: 14px 10px; font-size: 0.78rem; }
+      .portal-content { padding: 20px 16px 48px; }
+      .ticket-card { grid-template-columns: 1fr; }
+      .ticket-card-badge { grid-column: 1; grid-row: auto; justify-self: start; }
     }
   </style>
 </head>
@@ -118,51 +324,133 @@
     </nav>
   </header>
 
-  <section style="background: var(--warm-white); padding: 0;">
+  <!-- ── Auth / landing ───────────────────────────────────────────────────── -->
+  <section id="support-section">
     <div class="support-center">
 
-      <span class="eyebrow" style="justify-content: center; display: block; text-align: center; margin-bottom: 10px;">Existing Customers</span>
-      <h1>Need Help? We've Got You.</h1>
-      <p class="lead">If you're an existing CampbellNet customer and need to submit a support ticket, request service, or check the status of an open issue, you're in the right place.</p>
+      <span class="eyebrow" style="justify-content:center;display:block;text-align:center;margin-bottom:10px;">Existing Customers</span>
+      <h1>Customer Portal</h1>
+      <p class="lead">Enter your email address and we'll send you a login code.</p>
 
-      <!-- PORTAL CTA -->
-      <div class="portal-card reveal">
-        <h2>Access the Customer Portal</h2>
-        <p>Submit tickets, track open issues, and manage your service requests — all in one place.</p>
-        <!-- Update this href to the actual Mission Suite portal URL -->
-        <a href="#" class="btn btn-primary">Open Customer Portal →</a>
-      </div>
+      <div class="auth-card">
 
-      <!-- CONTACT OPTIONS -->
-      <div class="contact-options reveal">
-        <div class="contact-option-card">
-          <div class="contact-option-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.59 5.59l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <!-- Step 1: Email -->
+        <div id="step-email">
+          <div class="auth-error" id="email-error"></div>
+          <div class="auth-field">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" placeholder="you@yourcompany.com" autocomplete="email">
           </div>
-          <div>
-            <h3>Phone</h3>
-            <a href="tel:5853778910">585-377-8910</a>
-          </div>
+          <button class="btn btn-primary" style="width:100%" id="btn-send-code">Send My Code</button>
         </div>
-        <div class="contact-option-card">
-          <div class="contact-option-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <h3>Email</h3>
-            <!-- Update to confirmed support email -->
-            <a href="mailto:support@campbellnetsolutions.com">support@campbellnetsolutions.com</a>
-          </div>
-        </div>
-      </div>
 
-      <!-- NEW CUSTOMER NOTE -->
-      <div class="new-customer-note reveal">
+        <!-- Step 2: OTP -->
+        <div id="step-otp" style="display:none">
+          <p class="auth-lead">We sent a 6-digit code to <strong id="otp-email-display"></strong>. It expires in 5 minutes.</p>
+          <div class="auth-error" id="otp-error"></div>
+          <div class="auth-field">
+            <label for="login-code">Login Code</label>
+            <input type="text" id="login-code" class="otp-input" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+          </div>
+          <button class="btn btn-primary" style="width:100%" id="btn-verify">Sign In</button>
+          <button class="auth-back" id="btn-back-email">← Use a different email</button>
+        </div>
+
+      </div><!-- /auth-card -->
+
+      <div class="new-customer-note">
         Not a current customer? Head to our <a href="contact.html">Contact page</a> to get in touch about starting a new project or getting a free assessment.
       </div>
 
     </div>
   </section>
+
+  <!-- ── Portal (revealed after login) ───────────────────────────────────── -->
+  <div id="portal" style="display:none">
+
+    <!-- Sticky tab nav -->
+    <div class="portal-nav">
+      <div class="portal-nav-inner">
+        <div class="portal-tabs">
+          <button class="portal-tab active" data-tab="tab-file">File a Ticket</button>
+          <button class="portal-tab" data-tab="tab-open">Open Tickets</button>
+          <button class="portal-tab" data-tab="tab-closed">Closed Tickets</button>
+          <button class="portal-tab" data-tab="tab-kb">Knowledge Base</button>
+        </div>
+        <div class="portal-user">
+          <span class="portal-user-email" id="portal-email-display"></span>
+          <button class="btn-logout" id="btn-logout">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="portal-content">
+
+      <!-- File a Ticket -->
+      <div class="portal-panel active" id="tab-file">
+        <div class="file-ticket-wrap">
+          <h2>File a Support Ticket</h2>
+          <p class="lead">Describe your issue and we'll get back to you as soon as possible.</p>
+          <div class="form-error" id="file-error"></div>
+          <div class="form-success" id="file-success">
+            <h3>Ticket Submitted</h3>
+            <p>We've received your request and will be in touch shortly.</p>
+            <button class="btn btn-primary" id="btn-file-another">Submit Another Ticket</button>
+          </div>
+          <form id="file-form">
+            <div class="form-group">
+              <label for="ticket-category">Category</label>
+              <select id="ticket-category" required>
+                <option value="">Loading categories…</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticket-summary">Subject</label>
+              <input type="text" id="ticket-summary" placeholder="Brief description of the issue" required>
+            </div>
+            <div class="form-group">
+              <label for="ticket-detail">Details</label>
+              <textarea id="ticket-detail" placeholder="What were you doing? What did you expect? What actually happened?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-submit-ticket">Submit Ticket</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Open Tickets -->
+      <div class="portal-panel" id="tab-open">
+        <h2 class="ticket-list-h">Open Tickets</h2>
+        <div class="category-pills" id="open-pills"></div>
+        <div id="open-tickets-body"><div class="loading"><span class="spinner"></span>Loading tickets…</div></div>
+      </div>
+
+      <!-- Closed Tickets -->
+      <div class="portal-panel" id="tab-closed">
+        <h2 class="ticket-list-h">Closed Tickets</h2>
+        <div class="category-pills" id="closed-pills"></div>
+        <div id="closed-tickets-body"><div class="loading"><span class="spinner"></span>Loading tickets…</div></div>
+      </div>
+
+      <!-- Ticket Detail (shared overlay) -->
+      <div class="portal-panel" id="tab-detail">
+        <button class="detail-back" id="btn-detail-back">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to tickets
+        </button>
+        <div id="detail-body"><div class="loading"><span class="spinner"></span>Loading…</div></div>
+      </div>
+
+      <!-- Knowledge Base -->
+      <div class="portal-panel" id="tab-kb">
+        <div class="kb-header">
+          <h2>Knowledge Base</h2>
+          <p>Configuration notes and reference guides from the CampbellNet team.</p>
+        </div>
+        <div id="kb-body"><div class="loading"><span class="spinner"></span>Loading…</div></div>
+      </div>
+
+    </div><!-- /portal-content -->
+  </div><!-- /portal -->
 
   <footer class="site-footer">
     <div class="footer-grid">
@@ -205,13 +493,431 @@
     </div>
   </footer>
 
-  <script>
-    const header = document.getElementById('site-header');
-    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+let currentEmail = '';
+let allTickets   = [];
+let categories   = [];
+let activeFilter = { open: null, closed: null };
+let prevTab      = 'tab-open';
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+const el  = id  => document.getElementById(id);
+const esc = str => String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function formatDate(ms14) {
+  if (!ms14 || ms14.length < 8) return '—';
+  const [y, mo, d, h, mi] = [ms14.slice(0,4), ms14.slice(4,6), ms14.slice(6,8), ms14.slice(8,10)||'00', ms14.slice(10,12)||'00'];
+  const dt = new Date(`${y}-${mo}-${d}T${h}:${mi}:00`);
+  return isNaN(dt) ? '—' : dt.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+}
+
+function isOpen(t) { return !(t.status || '').toLowerCase().startsWith('closed'); }
+
+function statusClass(status) {
+  const s = (status || '').toLowerCase();
+  if (s.includes('escalated')) return 'status-escalated';
+  if (s.startsWith('closed'))  return 'status-closed';
+  return 'status-open';
+}
+
+// ─── Auth flow ────────────────────────────────────────────────────────────────
+el('btn-send-code').addEventListener('click', sendCode);
+el('login-email').addEventListener('keydown', e => { if (e.key === 'Enter') sendCode(); });
+el('btn-verify').addEventListener('click', verifyCode);
+el('login-code').addEventListener('keydown', e => { if (e.key === 'Enter') verifyCode(); });
+el('btn-back-email').addEventListener('click', () => {
+  el('step-otp').style.display = 'none';
+  el('step-email').style.display = '';
+  el('otp-error').style.display = 'none';
+});
+
+async function sendCode() {
+  const addr  = el('login-email').value.trim();
+  const errEl = el('email-error');
+  errEl.style.display = 'none';
+
+  if (!addr || !addr.includes('@')) {
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = el('btn-send-code');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    await fetch('/api/portal/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: addr }),
+    });
+    currentEmail = addr;
+    el('otp-email-display').textContent = addr;
+    el('step-email').style.display = 'none';
+    el('step-otp').style.display = '';
+    el('login-code').focus();
+  } catch {
+    errEl.textContent = 'Something went wrong. Please try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Send My Code';
+    btn.disabled = false;
+  }
+}
+
+async function verifyCode() {
+  const code  = el('login-code').value.trim();
+  const errEl = el('otp-error');
+  errEl.style.display = 'none';
+
+  if (!code || code.length !== 6) {
+    errEl.textContent = 'Please enter the 6-digit code from your email.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = el('btn-verify');
+  btn.textContent = 'Verifying…';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/portal/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentEmail, code }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      errEl.textContent = data.error || 'Invalid code. Please try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    currentEmail = data.email;
+    showPortal();
+  } catch {
+    errEl.textContent = 'Something went wrong. Please try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Sign In';
+    btn.disabled = false;
+  }
+}
+
+// ─── Session check on load ────────────────────────────────────────────────────
+(async function checkSession() {
+  try {
+    const res = await fetch('/api/portal/session');
+    if (res.ok) {
+      const data = await res.json();
+      currentEmail = data.email;
+      showPortal();
+    }
+  } catch { /* stay on login */ }
+})();
+
+// ─── Show portal ──────────────────────────────────────────────────────────────
+function showPortal() {
+  el('support-section').style.display = 'none';
+  el('portal').style.display = '';
+  el('portal-email-display').textContent = currentEmail;
+  // Make header always show scrolled style when portal is active
+  el('site-header').classList.add('scrolled');
+  loadCategories();
+  loadTickets();
+  loadKnowledgeBase();
+}
+
+// Sign out
+el('btn-logout').addEventListener('click', async () => {
+  await fetch('/api/portal/logout', { method: 'POST' });
+  currentEmail = '';
+  allTickets   = [];
+  el('portal').style.display = 'none';
+  el('support-section').style.display = '';
+  el('step-otp').style.display = 'none';
+  el('step-email').style.display = '';
+  el('login-email').value = '';
+  el('login-code').value  = '';
+});
+
+// ─── Tabs ─────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.portal-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+});
+
+function switchTab(id) {
+  document.querySelectorAll('.portal-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+  document.querySelectorAll('.portal-panel').forEach(p => p.classList.toggle('active', p.id === id));
+}
+
+el('btn-detail-back').addEventListener('click', () => switchTab(prevTab));
+
+// ─── Categories ───────────────────────────────────────────────────────────────
+async function loadCategories() {
+  try {
+    const res  = await fetch('/api/portal/categories');
+    const data = await res.json();
+    if (data.categories?.length) {
+      categories = data.categories;
+      const sel  = el('ticket-category');
+      sel.innerHTML = '<option value="">Select a category…</option>' +
+        categories.map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+    }
+  } catch { /* non-fatal */ }
+}
+
+// ─── Tickets ──────────────────────────────────────────────────────────────────
+async function loadTickets() {
+  try {
+    const res  = await fetch('/api/portal/tickets');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    allTickets = data.tickets || [];
+  } catch {
+    allTickets = [];
+    el('open-tickets-body').innerHTML   = '<div class="ticket-empty">Failed to load tickets. Please refresh.</div>';
+    el('closed-tickets-body').innerHTML = '<div class="ticket-empty">Failed to load tickets. Please refresh.</div>';
+    return;
+  }
+  renderTicketList('open');
+  renderTicketList('closed');
+  renderCategoryPills('open');
+  renderCategoryPills('closed');
+}
+
+function ticketsForTab(tab, catFilter) {
+  return allTickets.filter(t => {
+    const matchTab = tab === 'open' ? isOpen(t) : !isOpen(t);
+    const matchCat = !catFilter || t.categoryId === catFilter || t.category === catFilter;
+    return matchTab && matchCat;
+  });
+}
+
+function categoriesInTab(tab) {
+  const seen = new Map();
+  allTickets.filter(t => tab === 'open' ? isOpen(t) : !isOpen(t)).forEach(t => {
+    if (t.categoryId && t.category && !seen.has(t.categoryId)) seen.set(t.categoryId, t.category);
+  });
+  return [...seen.entries()].map(([id, name]) => ({ id, name }));
+}
+
+function renderCategoryPills(tab) {
+  const wrap = el(`${tab}-pills`);
+  const cats = categoriesInTab(tab);
+  if (!cats.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+  wrap.innerHTML = cats.map(c =>
+    `<button class="category-pill${activeFilter[tab] === c.id ? ' active' : ''}" data-tab="${tab}" data-id="${esc(c.id)}">${esc(c.name)}</button>`
+  ).join('');
+  wrap.querySelectorAll('.category-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      activeFilter[tab] = activeFilter[tab] === pill.dataset.id ? null : pill.dataset.id;
+      renderCategoryPills(tab);
+      renderTicketList(tab);
+    });
+  });
+}
+
+function renderTicketList(tab) {
+  const container = el(`${tab}-tickets-body`);
+  const tickets   = ticketsForTab(tab, activeFilter[tab]);
+
+  if (!tickets.length) {
+    const msg = activeFilter[tab] ? 'No tickets in that category.' : `No ${tab} tickets.`;
+    container.innerHTML = `<div class="ticket-empty">${msg}</div>`;
+    return;
+  }
+
+  container.innerHTML = `<div class="ticket-list">${
+    tickets.map(t => `
+      <div class="ticket-card" data-id="${esc(t.id)}" data-origin="${tab}">
+        <div class="ticket-card-summary">${esc(t.summary || '(No subject)')}</div>
+        <div class="ticket-card-meta">
+          #${esc(t.id)}${t.category ? ` &middot; ${esc(t.category)}` : ''}
+          &middot; ${tab === 'open' ? 'Opened' : 'Closed'} ${formatDate(tab === 'open' ? t.created : t.closed)}
+        </div>
+        <div class="ticket-card-badge">
+          <span class="status-badge ${statusClass(t.status)}">${esc(t.status || 'Open')}</span>
+        </div>
+      </div>`
+    ).join('')
+  }</div>`;
+
+  container.querySelectorAll('.ticket-card').forEach(card => {
+    card.addEventListener('click', () => openTicket(card.dataset.id, card.dataset.origin));
+  });
+}
+
+// ─── Ticket detail ────────────────────────────────────────────────────────────
+async function openTicket(id, origin) {
+  prevTab = `tab-${origin}`;
+  switchTab('tab-detail');
+  el('detail-body').innerHTML = '<div class="loading"><span class="spinner"></span>Loading ticket…</div>';
+
+  try {
+    const res  = await fetch(`/api/portal/ticket/${id}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    renderDetail(data.ticket);
+  } catch (err) {
+    el('detail-body').innerHTML = `<div class="ticket-empty">${esc(err.message || 'Failed to load ticket.')}</div>`;
+  }
+}
+
+function renderDetail(ticket) {
+  const open    = isOpen(ticket);
+  const updates = ticket.updates || [];
+
+  const thread = updates.length === 0
+    ? '<p style="color:var(--slate);font-size:0.9rem">No updates yet.</p>'
+    : updates.map(u => {
+        const mine = u.email?.toLowerCase() === currentEmail.toLowerCase();
+        const name = mine ? 'You' : ([u.firstname, u.lastname].filter(Boolean).join(' ') || 'CampbellNet Support');
+        return `<div class="thread-item ${mine ? 'from-customer' : 'from-cns'}">
+          <div class="thread-meta">
+            <span class="thread-author">${esc(name)}</span>
+            <span class="thread-time">${formatDate(u.datetime)}</span>
+          </div>
+          <div class="thread-content">${esc(u.content || '').replace(/\n/g, '<br>')}</div>
+        </div>`;
+      }).join('');
+
+  const reply = open
+    ? `<div class="reply-form">
+        <h3>Add an Update</h3>
+        <textarea id="reply-text" placeholder="Describe any new information or follow-up…"></textarea>
+        <div class="reply-form-footer"><button class="btn btn-primary" id="btn-reply">Send Update</button></div>
+       </div>
+       <div class="reply-note">Your update will be emailed to the CampbellNet support team. You'll receive a copy at ${esc(currentEmail)}.</div>`
+    : `<div class="reply-note">This ticket is closed. <a href="#" onclick="event.preventDefault();switchTab('tab-file')">File a new ticket</a> if you need further help.</div>`;
+
+  el('detail-body').innerHTML = `
+    <div class="detail-header">
+      <h2>${esc(ticket.summary || 'Ticket #' + ticket.id)}</h2>
+      <div class="detail-meta">
+        <span>Ticket #${esc(ticket.id)}</span>
+        ${ticket.category ? `<span>&middot; ${esc(ticket.category)}</span>` : ''}
+        <span>&middot; <strong>Status:</strong> ${esc(ticket.status || 'Open')}</span>
+        <span>&middot; <strong>Opened:</strong> ${formatDate(ticket.created)}</span>
+        ${ticket.closed ? `<span>&middot; <strong>Closed:</strong> ${formatDate(ticket.closed)}</span>` : ''}
+      </div>
+    </div>
+    <div class="thread">${thread}</div>
+    ${reply}
+  `;
+
+  if (open && el('btn-reply')) {
+    el('btn-reply').addEventListener('click', () => submitReply(ticket.id));
+  }
+}
+
+async function submitReply(ticketId) {
+  const detail = el('reply-text').value.trim();
+  if (!detail) { el('reply-text').focus(); return; }
+
+  const btn = el('btn-reply');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch(`/api/portal/ticket/${ticketId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ detail }),
+    });
+    const data = await res.json();
+    if (!res.ok) { alert(data.error || 'Failed to send. Please try again.'); return; }
+    openTicket(ticketId, prevTab.replace('tab-', ''));
+  } catch {
+    alert('Failed to send. Please try again.');
+  } finally {
+    btn.textContent = 'Send Update';
+    btn.disabled = false;
+  }
+}
+
+// ─── File a ticket ────────────────────────────────────────────────────────────
+el('file-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const errEl   = el('file-error');
+  const catId   = el('ticket-category').value;
+  const summary = el('ticket-summary').value.trim();
+  const detail  = el('ticket-detail').value.trim();
+  errEl.style.display = 'none';
+
+  if (!catId || !summary || !detail) {
+    errEl.textContent = 'Please fill in all fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = el('btn-submit-ticket');
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/portal/tickets', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoryId: catId, summary, detail }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      errEl.textContent = data.error || 'Failed to submit. Please try again or call 585-377-8910.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    el('file-form').reset();
+    loadCategories(); // repopulate select
+    el('file-form').style.display = 'none';
+    el('file-success').style.display = '';
+    loadTickets(); // refresh list in background
+
+  } catch {
+    errEl.textContent = 'Something went wrong. Please try again or call 585-377-8910.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Submit Ticket';
+    btn.disabled = false;
+  }
+});
+
+el('btn-file-another').addEventListener('click', () => {
+  el('file-success').style.display = 'none';
+  el('file-form').style.display = '';
+});
+
+// ─── Knowledge base ───────────────────────────────────────────────────────────
+async function loadKnowledgeBase() {
+  try {
+    const res  = await fetch('/data/knowledge-base.json');
+    const data = await res.json();
+    if (!data.length) {
+      el('kb-body').innerHTML = '<div class="kb-empty">No articles yet — check back soon.</div>';
+      return;
+    }
+    el('kb-body').innerHTML = `<div class="kb-list">${
+      data.map(a => `<div class="kb-card">
+        <h3>${esc(a.title)}</h3>
+        <div class="kb-card-meta">${esc(a.category)} &middot; Updated ${esc(a.updated)}</div>
+        <p>${esc(a.content)}</p>
+      </div>`).join('')
+    }</div>`;
+  } catch {
+    el('kb-body').innerHTML = '<div class="kb-empty">Could not load articles. Please refresh.</div>';
+  }
+}
+
+// ─── Header scroll ────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  el('site-header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+</script>
 </body>
 </html>
