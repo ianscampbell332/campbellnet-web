@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
-  const xml = `<AddContactsRequest update="true">
+  const addContactXml = `<AddContactsRequest update="true">
   <Contacts>
     <Contact account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}">
       <Firstname>${esc(name_first)}</Firstname>
@@ -44,35 +44,57 @@ export default async function handler(req, res) {
       <UserDefinedFields>
         <UserDefinedField fieldname="Service Interest">${esc(serviceInterest)}</UserDefinedField>
       </UserDefinedFields>
-      <Groups>
-        <Group_id>${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}</Group_id>
-      </Groups>
       <WorkflowID>${process.env.MISSION_SUITE_CONTACT_WORKFLOW_ID}</WorkflowID>
     </Contact>
   </Contacts>
 </AddContactsRequest>`;
 
-  const body = new URLSearchParams({
-    email: process.env.MISSION_SUITE_USER,
-    auth_token: process.env.MISSION_SUITE_AUTH_TOKEN,
-    xml,
-  });
-
-  try {
-    const msRes = await fetch('https://api.stgi.net/api-xml', {
+  const msPost = async (xml) => {
+    const body = new URLSearchParams({
+      email: process.env.MISSION_SUITE_USER,
+      auth_token: process.env.MISSION_SUITE_AUTH_TOKEN,
+      xml,
+    });
+    const res = await fetch('https://api.stgi.net/api-xml', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString(),
     });
+    return res.text();
+  };
 
-    const text = await msRes.text();
+  try {
+    // Step 1: Add contact
+    const addText = await msPost(addContactXml);
 
-    if (text.includes('<Result>Success</Result>')) {
-      return res.status(200).json({ success: true });
+    if (!addText.includes('<Result>Success</Result>')) {
+      console.error('AddContactsRequest failed:', addText);
+      return res.status(502).json({ error: 'Mission Suite error', detail: addText });
     }
 
-    console.error('Mission Suite error response:', text);
-    return res.status(502).json({ error: 'Mission Suite error', detail: text || '(empty response body)', sentXml: xml });
+    // Extract contact_id from response
+    const match = addText.match(/<Contact_id>(\d+)<\/Contact_id>/);
+    if (!match) {
+      console.error('Could not parse contact_id from response:', addText);
+      return res.status(502).json({ error: 'Mission Suite error', detail: 'Contact created but could not parse contact_id' });
+    }
+    const contactId = match[1];
+
+    // Step 2: Add contact to group
+    const addToGroupXml = `<AddContactsToGroupRequest account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}" group_id="${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}">
+  <Contacts>
+    <Contact contact_id="${contactId}" />
+  </Contacts>
+</AddContactsToGroupRequest>`;
+
+    const groupText = await msPost(addToGroupXml);
+
+    if (!groupText.includes('<Result>Success</Result>')) {
+      console.error('AddContactsToGroupRequest failed:', groupText);
+      return res.status(502).json({ error: 'Mission Suite error', detail: groupText });
+    }
+
+    return res.status(200).json({ success: true });
 
   } catch (err) {
     console.error('Mission Suite fetch failed:', err);
