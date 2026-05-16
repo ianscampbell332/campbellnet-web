@@ -31,24 +31,6 @@ export default async function handler(req, res) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
-  const addContactXml = `<AddContactsRequest update="true">
-  <Contacts>
-    <Contact account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}">
-      <Firstname>${esc(name_first)}</Firstname>
-      <Lastname>${esc(name_last)}</Lastname>
-      <Company>${esc(organization)}</Company>
-      <Email>${esc(email)}</Email>
-      <Phone>${esc(phone)}</Phone>
-      <City>${esc(location)}</City>
-      <Notes>${esc(message)}</Notes>
-      <UserDefinedFields>
-        <UserDefinedField fieldname="Service Interest">${esc(serviceInterest)}</UserDefinedField>
-      </UserDefinedFields>
-      <WorkflowID>${process.env.MISSION_SUITE_CONTACT_WORKFLOW_ID}</WorkflowID>
-    </Contact>
-  </Contacts>
-</AddContactsRequest>`;
-
   const msPost = async (xml) => {
     const body = new URLSearchParams({
       email: process.env.MISSION_SUITE_USER,
@@ -64,7 +46,40 @@ export default async function handler(req, res) {
   };
 
   try {
+    // Step 0: Look up group name from ID so we're not hardcoding a name that can change
+    const groupLookupXml = `<GetGroupsRequest account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}" group_id="${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}" response="json"></GetGroupsRequest>`;
+    const groupLookupText = await msPost(groupLookupXml);
+    const groupData = JSON.parse(groupLookupText);
+    const groupResult = groupData?.getgroupsresponse?.groups?.group;
+    const groupName = Array.isArray(groupResult) ? groupResult[0]?.name : groupResult?.name;
+
+    if (!groupName) {
+      console.error('Could not resolve group name from ID:', groupLookupText);
+      return res.status(502).json({ error: 'Mission Suite error', detail: 'Could not resolve group name from group ID' });
+    }
+
     // Step 1: Add contact
+    const addContactXml = `<AddContactsRequest update="true">
+  <Contacts>
+    <Contact account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}">
+      <Firstname>${esc(name_first)}</Firstname>
+      <Lastname>${esc(name_last)}</Lastname>
+      <Company>${esc(organization)}</Company>
+      <Email>${esc(email)}</Email>
+      <Phone>${esc(phone)}</Phone>
+      <City>${esc(location)}</City>
+      <Notes>${esc(message)}</Notes>
+      <UserDefinedFields>
+        <UserDefinedField fieldname="Service Interest">${esc(serviceInterest)}</UserDefinedField>
+      </UserDefinedFields>
+      <Groups>
+        <Group>${esc(groupName)}</Group>
+      </Groups>
+      <WorkflowID>${process.env.MISSION_SUITE_CONTACT_WORKFLOW_ID}</WorkflowID>
+    </Contact>
+  </Contacts>
+</AddContactsRequest>`;
+
     const addText = await msPost(addContactXml);
 
     if (!addText.includes('<Result>Success</Result>')) {
