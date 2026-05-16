@@ -87,28 +87,6 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: 'Mission Suite error', detail: addText });
     }
 
-    // Extract contact_id from response
-    const match = addText.match(/<Contact_id>(\d+)<\/Contact_id>/);
-    if (!match) {
-      console.error('Could not parse contact_id from response:', addText);
-      return res.status(502).json({ error: 'Mission Suite error', detail: 'Contact created but could not parse contact_id' });
-    }
-    const contactId = match[1];
-
-    // Step 2: Add contact to group
-    const addToGroupXml = `<AddContactsToGroupRequest account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}" group_id="${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}">
-  <Contacts>
-    <Contact contact_id="${contactId}" />
-  </Contacts>
-</AddContactsToGroupRequest>`;
-
-    const groupText = await msPost(addToGroupXml);
-
-    if (!groupText.includes('<Result>Success</Result>')) {
-      console.error('AddContactsToGroupRequest failed:', groupText);
-      return res.status(502).json({ error: 'Mission Suite error', detail: groupText });
-    }
-
     return res.status(200).json({ success: true });
 
   } catch (err) {
