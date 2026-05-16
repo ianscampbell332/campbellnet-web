@@ -1,3 +1,5 @@
+import { notifyAdmin } from './_notifyAdmin.js';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -55,7 +57,11 @@ export default async function handler(req, res) {
 
     if (!groupName) {
       console.error('Could not resolve group name from ID:', groupLookupText);
-      return res.status(502).json({ error: 'Mission Suite error', detail: 'Could not resolve group name from group ID' });
+      await notifyAdmin({
+        subject: 'CampbellNet contact form — MS group lookup failed',
+        text: `A contact form submission could not be saved to Mission Suite because the group lookup failed.\n\nGroup ID: ${process.env.MISSION_SUITE_CONTACT_FORM_GROUP_ID}\nMS response: ${groupLookupText}\n\nSubmission:\nName: ${name_first} ${name_last}\nOrg: ${organization}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\nServices: ${serviceInterest}\nMessage: ${message}`,
+      });
+      return res.status(200).json({ success: true });
     }
 
     // Step 1: Add contact
@@ -84,13 +90,21 @@ export default async function handler(req, res) {
 
     if (!addText.includes('<Result>Success</Result>')) {
       console.error('AddContactsRequest failed:', addText);
-      return res.status(502).json({ error: 'Mission Suite error', detail: addText });
+      await notifyAdmin({
+        subject: 'CampbellNet contact form — MS submission failed',
+        text: `A contact form submission failed to save to Mission Suite.\n\nMS response: ${addText}\n\nSubmission:\nName: ${name_first} ${name_last}\nOrg: ${organization}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\nServices: ${serviceInterest}\nMessage: ${message}`,
+      });
+      return res.status(200).json({ success: true });
     }
 
     return res.status(200).json({ success: true });
 
   } catch (err) {
     console.error('Mission Suite fetch failed:', err);
-    return res.status(500).json({ error: 'Network error. Please try again or call us directly.' });
+    await notifyAdmin({
+      subject: 'CampbellNet contact form — unexpected error',
+      text: `An unexpected error occurred processing a contact form submission.\n\nError: ${err.message}\n\nSubmission:\nName: ${name_first} ${name_last}\nOrg: ${organization}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}\nServices: ${serviceInterest}\nMessage: ${message}`,
+    });
+    return res.status(200).json({ success: true });
   }
 }
