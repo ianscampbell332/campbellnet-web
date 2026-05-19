@@ -59,15 +59,23 @@ async function getTicket(res, email, id) {
       });
     }
 
+    // AssignedTo may come as a full name or as separate first/last fields
+    const assignedFirst = xmlGet(ticketBlock, 'AssignedToFirstname');
+    const assignedLast  = xmlGet(ticketBlock, 'AssignedToLastname');
+    const assignedName  = xmlGet(ticketBlock, 'AssignedTo')
+      || [assignedFirst, assignedLast].filter(Boolean).join(' ')
+      || '';
+
     const ticket = {
       id,
-      summary:    xmlGet(ticketBlock, 'TicketSummary'),
-      status:     xmlGet(ticketBlock, 'Status'),
-      created:    xmlGet(ticketBlock, 'CreatedDatetime'),
-      closed:     xmlGet(ticketBlock, 'ClosedDatetime'),
-      categoryId: xmlGet(ticketBlock, 'CategoryID'),
-      category:   xmlGet(ticketBlock, 'CategoryName'),
-      email:      ticketEmail,
+      summary:      xmlGet(ticketBlock, 'TicketSummary'),
+      status:       xmlGet(ticketBlock, 'Status'),
+      created:      xmlGet(ticketBlock, 'CreatedDatetime'),
+      closed:       xmlGet(ticketBlock, 'ClosedDatetime'),
+      categoryId:   xmlGet(ticketBlock, 'CategoryID'),
+      category:     xmlGet(ticketBlock, 'CategoryName'),
+      assignedTo:   assignedName,
+      email:        ticketEmail,
       updates,
     };
 
@@ -116,7 +124,9 @@ async function addUpdate(req, res, email, id) {
 
     const text = await msPost(xml);
 
-    if (!text.includes('<Result>Success</Result>')) {
+    // MS returns different success strings for different request types.
+    // Treat as failure only if an explicit error code is present.
+    if (text.includes('<ErrorCode>') || text.includes('<Result>Error</Result>')) {
       console.error('AddTicketUpdateRequest failed:', text);
       return res.status(500).json({ error: 'Failed to submit update. Please try again.' });
     }

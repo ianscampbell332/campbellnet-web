@@ -252,6 +252,7 @@
 
     .reply-form { background: var(--white); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
     .reply-form h3 { font-family: var(--font-display); font-size: 1rem; color: var(--navy); margin: 0 0 12px; }
+    .reply-error { color: #c0392b; font-size: 0.875rem; margin-top: 10px; display: none; }
     .reply-form textarea {
       width: 100%; min-height: 100px; padding: 11px 14px;
       border: 1.5px solid #d0d5e0; border-radius: 6px;
@@ -777,12 +778,15 @@ function renderDetail(ticket) {
     : updates.map(u => {
         const mine = u.email?.toLowerCase() === currentEmail.toLowerCase();
         const name = mine ? 'You' : ([u.firstname, u.lastname].filter(Boolean).join(' ') || 'CampbellNet Support');
+        // MS stores content as HTML from its rich text editor — render directly.
+        // Strip <script> tags as a basic precaution; all other HTML is trusted CRM content.
+        const safeContent = (u.content || '').replace(/<script[\s\S]*?<\/script>/gi, '');
         return `<div class="thread-item ${mine ? 'from-customer' : 'from-cns'}">
           <div class="thread-meta">
             <span class="thread-author">${esc(name)}</span>
             <span class="thread-time">${formatDate(u.datetime)}</span>
           </div>
-          <div class="thread-content">${esc(u.content || '').replace(/\n/g, '<br>')}</div>
+          <div class="thread-content">${safeContent || '<em style="color:var(--slate)">(no content)</em>'}</div>
         </div>`;
       }).join('');
 
@@ -791,6 +795,7 @@ function renderDetail(ticket) {
         <h3>Add an Update</h3>
         <textarea id="reply-text" placeholder="Describe any new information or follow-up…"></textarea>
         <div class="reply-form-footer"><button class="btn btn-primary" id="btn-reply">Send Update</button></div>
+        <div class="reply-error" id="reply-error"></div>
        </div>
        <div class="reply-note">Your update will be emailed to the CampbellNet support team. You'll receive a copy at ${esc(currentEmail)}.</div>`
     : `<div class="reply-note">This ticket is closed. <a href="#" onclick="event.preventDefault();switchTab('tab-file')">File a new ticket</a> if you need further help.</div>`;
@@ -802,6 +807,7 @@ function renderDetail(ticket) {
         <span>Ticket #${esc(ticket.id)}</span>
         ${ticket.category ? `<span>&middot; ${esc(ticket.category)}</span>` : ''}
         <span>&middot; <strong>Status:</strong> ${esc(ticket.status || 'Open')}</span>
+        ${ticket.assignedTo ? `<span>&middot; <strong>Assigned to:</strong> ${esc(ticket.assignedTo)}</span>` : ''}
         <span>&middot; <strong>Opened:</strong> ${formatDate(ticket.created)}</span>
         ${ticket.closed ? `<span>&middot; <strong>Closed:</strong> ${formatDate(ticket.closed)}</span>` : ''}
       </div>
@@ -830,10 +836,15 @@ async function submitReply(ticketId) {
       body: JSON.stringify({ detail }),
     });
     const data = await res.json();
-    if (!res.ok) { alert(data.error || 'Failed to send. Please try again.'); return; }
+    if (!res.ok) {
+      const errEl = el('reply-error');
+      if (errEl) { errEl.textContent = data.error || 'Failed to send. Please try again.'; errEl.style.display = 'block'; }
+      return;
+    }
     openTicket(ticketId, prevTab.replace('tab-', ''));
   } catch {
-    alert('Failed to send. Please try again.');
+    const errEl = el('reply-error');
+    if (errEl) { errEl.textContent = 'Something went wrong. Please try again.'; errEl.style.display = 'block'; }
   } finally {
     btn.textContent = 'Send Update';
     btn.disabled = false;
