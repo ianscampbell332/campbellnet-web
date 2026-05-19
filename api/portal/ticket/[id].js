@@ -59,23 +59,15 @@ async function getTicket(res, email, id) {
       });
     }
 
-    // AssignedTo may come as a full name or as separate first/last fields
-    const assignedFirst = xmlGet(ticketBlock, 'AssignedToFirstname');
-    const assignedLast  = xmlGet(ticketBlock, 'AssignedToLastname');
-    const assignedName  = xmlGet(ticketBlock, 'AssignedTo')
-      || [assignedFirst, assignedLast].filter(Boolean).join(' ')
-      || '';
-
     const ticket = {
       id,
-      summary:      xmlGet(ticketBlock, 'TicketSummary'),
-      status:       xmlGet(ticketBlock, 'Status'),
-      created:      xmlGet(ticketBlock, 'CreatedDatetime'),
-      closed:       xmlGet(ticketBlock, 'ClosedDatetime'),
-      categoryId:   xmlGet(ticketBlock, 'CategoryID'),
-      category:     xmlGet(ticketBlock, 'CategoryName'),
-      assignedTo:   assignedName,
-      email:        ticketEmail,
+      summary:    xmlGet(ticketBlock, 'TicketSummary'),
+      status:     xmlGet(ticketBlock, 'Status'),
+      created:    xmlGet(ticketBlock, 'CreatedDatetime'),
+      closed:     xmlGet(ticketBlock, 'ClosedDatetime'),
+      categoryId: xmlGet(ticketBlock, 'CategoryID'),
+      category:   xmlGet(ticketBlock, 'CategoryName'),
+      email:      ticketEmail,
       updates,
     };
 
