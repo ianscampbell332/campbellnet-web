@@ -69,23 +69,64 @@ export default async function handler(req, res) {
         to:      addr,
         subject: 'Your CampbellNet portal login code',
         text:    `Your login code is: ${otp}\n\nThis code expires in 5 minutes.\n\nIf you didn't request this, you can safely ignore this email.`,
-        html: `
-          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;color:#333">
-            <div style="margin-bottom:28px">
-              <span style="font-size:20px;font-weight:700;color:#1E2D78;letter-spacing:-0.5px">CampbellNet Solutions</span>
-            </div>
-            <h2 style="font-size:22px;color:#1E2D78;margin:0 0 12px">Your login code</h2>
-            <p style="margin:0 0 24px;color:#555;line-height:1.6">
-              Enter this code to access the CampbellNet customer portal:
+        html: `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f5f0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+  <!-- Wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f5f5f0;padding:40px 16px;">
+    <tr><td align="center">
+      <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:520px;">
+
+        <!-- Header bar -->
+        <tr>
+          <td style="background:#1E2D78;border-radius:8px 8px 0 0;padding:24px 36px;">
+            <p style="margin:0;font-size:18px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;">CampbellNet Solutions</p>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="background:#ffffff;padding:36px 36px 28px;border-left:1px solid #e5e8f0;border-right:1px solid #e5e8f0;">
+
+            <h1 style="margin:0 0 10px;font-size:22px;font-weight:700;color:#1E2D78;line-height:1.3;">Your login code</h1>
+            <p style="margin:0 0 28px;font-size:15px;color:#555555;line-height:1.6;">
+              Use the code below to sign in to the CampbellNet customer portal. It expires in <strong>5 minutes</strong>.
             </p>
-            <div style="font-size:40px;font-weight:700;letter-spacing:10px;color:#1E2D78;background:#f5f5f0;padding:20px 24px;border-radius:8px;text-align:center;margin-bottom:24px">
-              ${otp}
-            </div>
-            <p style="margin:0;color:#999;font-size:13px;line-height:1.6">
-              This code expires in 5&nbsp;minutes. If you didn't request this, you can safely ignore this email.
+
+            <!-- OTP box -->
+            <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+              <tr>
+                <td align="center" style="background:#f5f5f0;border-radius:8px;padding:24px 16px;">
+                  <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888888;">Login Code</p>
+                  <p style="margin:0;font-size:44px;font-weight:700;letter-spacing:12px;color:#1E2D78;line-height:1;">${otp}</p>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:28px 0 0;font-size:13px;color:#999999;line-height:1.6;">
+              If you didn't request this, you can safely ignore this email — your account is not at risk.
             </p>
-          </div>
-        `,
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f0f0ea;border-radius:0 0 8px 8px;border:1px solid #e5e8f0;border-top:none;padding:16px 36px;">
+            <p style="margin:0;font-size:12px;color:#999999;line-height:1.6;">
+              CampbellNet Solutions &mdash; Upstate New York &mdash;
+              <a href="https://campbellnetsolutions.com" style="color:#1E2D78;text-decoration:none;">campbellnetsolutions.com</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+
+</body>
+</html>`,
       }),
     });
 
