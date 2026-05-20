@@ -372,7 +372,7 @@
             </div>
           </div>
           <div class="auth-field">
-            <label for="req-title">Title</label>
+            <label for="req-title">Title <span style="color:#c0392b">*</span></label>
             <input type="text" id="req-title" placeholder="e.g. IT Manager" autocomplete="organization-title">
           </div>
           <div class="auth-field">
@@ -380,7 +380,7 @@
             <input type="text" id="req-org" autocomplete="organization">
           </div>
           <div class="auth-field">
-            <label for="req-phone">Phone</label>
+            <label for="req-phone">Phone <span style="color:#c0392b">*</span></label>
             <input type="tel" id="req-phone" autocomplete="tel">
           </div>
           <div class="auth-field">
@@ -613,8 +613,8 @@ async function submitAccessRequest() {
   const phone        = el('req-phone').value.trim();
   const email        = el('req-email-display').value.trim();
 
-  if (!firstName || !lastName || !organization || !email) {
-    errEl.textContent = 'Please fill in First Name, Last Name, Organization, and Email.';
+  if (!firstName || !lastName || !title || !organization || !phone || !email) {
+    errEl.textContent = 'All fields are required.';
     errEl.style.display = 'block';
     return;
   }

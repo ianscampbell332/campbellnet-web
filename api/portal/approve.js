@@ -137,7 +137,9 @@ export default async function handler(req, res) {
     }
 
     // ── 3. Send approval email to the user ────────────────────────────────────
-    const portalUrl = 'https://campbellnetsolutions.com/support.html';
+    const host      = req.headers['x-forwarded-host'] || req.headers['host'] || 'campbellnetsolutions.com';
+    const protocol  = host.includes('localhost') ? 'http' : 'https';
+    const portalUrl = `${protocol}://${host}/support.html`;
 
     await fetch('https://api.resend.com/emails', {
       method:  'POST',
