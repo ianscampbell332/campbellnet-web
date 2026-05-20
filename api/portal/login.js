@@ -30,26 +30,34 @@ export default async function handler(req, res) {
   }
 
   const addr = email.trim().toLowerCase();
-  const ok   = () => res.status(200).json({ success: true });
 
   try {
-    // ── 1. Verify email is in the Customers group ──────────────────────────
+    // ── 1. Verify email exists in the Customers group (Group 9) ───────────
     const lookupXml = `<GetContactsRequest account_id="${process.env.MISSION_SUITE_ACCOUNT_ID}" group_id="${process.env.MISSION_SUITE_CUSTOMERS_GROUP_ID}" response="json"><SearchParameters><Email>${xmlEsc(addr)}</Email></SearchParameters></GetContactsRequest>`;
     const lookupText = await msPost(lookupXml);
 
     let found = false;
     try {
-      const data     = JSON.parse(lookupText);
-      const contacts = data?.getcontactsresponse?.contacts?.contact;
-      found = !!contacts;
+      const data        = JSON.parse(lookupText);
+      const contactData = data?.getcontactsresponse?.contacts?.contact;
+      if (contactData) {
+        // MS returns an object for one result, array for multiple
+        const contacts = Array.isArray(contactData) ? contactData : [contactData];
+        // Verify at least one returned contact actually has the matching email
+        found = contacts.some(c =>
+          (c.email || c.Email || '').toLowerCase() === addr
+        );
+      }
     } catch {
-      // Fall back to a case-insensitive string search in the raw response
-      found = lookupText.toLowerCase().includes(addr.toLowerCase());
+      // JSON parse failed — MS returned XML or an error response.
+      // Do NOT fall back to string search (prone to false positives).
+      console.warn('Group 9 lookup parse failed:', lookupText.slice(0, 300));
+      found = false;
     }
 
     if (!found) {
-      // Not a known customer — silent success
-      return ok();
+      // Not an approved customer — tell the frontend to show the request-access form
+      return res.status(200).json({ success: true, status: 'not_found' });
     }
 
     // ── 2. Generate OTP and set short-lived cookie ─────────────────────────
@@ -139,10 +147,10 @@ export default async function handler(req, res) {
       });
     }
 
-    return ok();
+    return res.status(200).json({ success: true, status: 'otp_sent' });
 
   } catch (err) {
     console.error('Portal login error:', err);
-    return ok(); // Always generic success
+    return res.status(200).json({ success: true, status: 'otp_sent' }); // fail safe
   }
 }

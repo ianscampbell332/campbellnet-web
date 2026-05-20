@@ -357,6 +357,49 @@
           <button class="auth-back" id="btn-back-email">← Use a different email</button>
         </div>
 
+        <!-- Step 3: Request access (shown when email isn't in the Customers group) -->
+        <div id="step-request-access" style="display:none">
+          <p class="auth-lead">That email isn't registered in our customer portal yet. Fill out the form below and the CampbellNet team will approve your access — typically within one business day.</p>
+          <div class="auth-error" id="request-error"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px;">
+            <div class="auth-field">
+              <label for="req-first">First Name <span style="color:#c0392b">*</span></label>
+              <input type="text" id="req-first" autocomplete="given-name">
+            </div>
+            <div class="auth-field">
+              <label for="req-last">Last Name <span style="color:#c0392b">*</span></label>
+              <input type="text" id="req-last" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="req-title">Title</label>
+            <input type="text" id="req-title" placeholder="e.g. IT Manager" autocomplete="organization-title">
+          </div>
+          <div class="auth-field">
+            <label for="req-org">Organization <span style="color:#c0392b">*</span></label>
+            <input type="text" id="req-org" autocomplete="organization">
+          </div>
+          <div class="auth-field">
+            <label for="req-phone">Phone</label>
+            <input type="tel" id="req-phone" autocomplete="tel">
+          </div>
+          <div class="auth-field">
+            <label for="req-email-display">Email Address</label>
+            <input type="email" id="req-email-display" autocomplete="email">
+          </div>
+          <button class="btn btn-primary" style="width:100%" id="btn-request-access">Request Access</button>
+          <button class="auth-back" id="btn-back-from-request">← Use a different email</button>
+        </div>
+
+        <!-- Step 4: Request submitted confirmation -->
+        <div id="step-request-success" style="display:none">
+          <div style="text-align:center;padding:16px 0 8px;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+            <h3 style="font-family:var(--font-display);color:var(--navy);margin:0 0 10px;font-size:1.2rem;">Request Submitted</h3>
+            <p class="auth-lead" style="margin:0">We've notified the CampbellNet team. You'll get an email once your access is approved — typically within one business day.</p>
+          </div>
+        </div>
+
       </div><!-- /auth-card -->
 
       <div class="new-customer-note">
@@ -514,12 +557,20 @@ function formatDate(ms14) {
   const h  = ms14.slice(8, 10)  || '00';
   const mi = ms14.slice(10, 12) || '00';
 
-  // GreenRope/Mission Suite stores datetimes in US Pacific time.
-  // Detect DST roughly: PDT (UTC-7) mid-March through early-November, PST (UTC-8) otherwise.
-  const monthNum = parseInt(mo, 10);
-  const offset   = (monthNum >= 3 && monthNum <= 11) ? '-07:00' : '-08:00';
-
-  const dt = new Date(`${y}-${mo}-${d}T${h}:${mi}:00${offset}`);
+  // GreenRope/Mission Suite stores datetimes in US Pacific (America/Los_Angeles).
+  // Use the Intl API to determine whether PST (-08:00) or PDT (-07:00) was active
+  // for this specific instant — avoids the ~8-day imprecision of a month-based guess.
+  //
+  // Step 1: Build a provisional Date assuming PST (UTC-8).
+  const provisional = new Date(`${y}-${mo}-${d}T${h}:${mi}:00-08:00`);
+  // Step 2: Ask the JS engine what Pacific offset was active at that UTC moment.
+  const parts  = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles', timeZoneName: 'shortOffset'
+  }).formatToParts(provisional);
+  const tzName = (parts.find(p => p.type === 'timeZoneName') || {}).value || '';
+  // Step 3: Rebuild with the correct offset and display in the user's local timezone.
+  const offset = (tzName.includes('-07') || tzName === 'PDT') ? '-07:00' : '-08:00';
+  const dt     = new Date(`${y}-${mo}-${d}T${h}:${mi}:00${offset}`);
   return isNaN(dt) ? '—' : dt.toLocaleString('en-US', { year:'numeric', month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
 }
 
@@ -543,6 +594,65 @@ el('btn-back-email').addEventListener('click', () => {
   el('otp-error').style.display = 'none';
 });
 
+el('btn-back-from-request').addEventListener('click', () => {
+  el('step-request-access').style.display = 'none';
+  el('step-email').style.display = '';
+  el('request-error').style.display = 'none';
+});
+
+el('btn-request-access').addEventListener('click', submitAccessRequest);
+
+async function submitAccessRequest() {
+  const errEl = el('request-error');
+  errEl.style.display = 'none';
+
+  const firstName    = el('req-first').value.trim();
+  const lastName     = el('req-last').value.trim();
+  const title        = el('req-title').value.trim();
+  const organization = el('req-org').value.trim();
+  const phone        = el('req-phone').value.trim();
+  const email        = el('req-email-display').value.trim();
+
+  if (!firstName || !lastName || !organization || !email) {
+    errEl.textContent = 'Please fill in First Name, Last Name, Organization, and Email.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!email.includes('@')) {
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = el('btn-request-access');
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/portal/request-access', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, lastName, title, organization, phone, email }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      errEl.textContent = data.error || 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    el('step-request-access').style.display = 'none';
+    el('step-request-success').style.display = '';
+  } catch {
+    errEl.textContent = 'Something went wrong. Please try again or call us at 585-377-8910.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Request Access';
+    btn.disabled = false;
+  }
+}
+
 async function sendCode() {
   const addr  = el('login-email').value.trim();
   const errEl = el('email-error');
@@ -559,16 +669,27 @@ async function sendCode() {
   btn.disabled = true;
 
   try {
-    await fetch('/api/portal/login', {
+    const res  = await fetch('/api/portal/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: addr }),
     });
+    const data = await res.json();
     currentEmail = addr;
-    el('otp-email-display').textContent = addr;
-    el('step-email').style.display = 'none';
-    el('step-otp').style.display = '';
-    el('login-code').focus();
+
+    if (data.status === 'not_found') {
+      // Email isn't in the Customers group — show the request-access form
+      el('req-email-display').value = addr;
+      el('step-email').style.display = 'none';
+      el('step-request-access').style.display = '';
+      el('req-first').focus();
+    } else {
+      // OTP sent — show the code entry step
+      el('otp-email-display').textContent = addr;
+      el('step-email').style.display = 'none';
+      el('step-otp').style.display = '';
+      el('login-code').focus();
+    }
   } catch {
     errEl.textContent = 'Something went wrong. Please try again.';
     errEl.style.display = 'block';

@@ -63,6 +63,21 @@ function verify(token) {
 
 // ─── public API ─────────────────────────────────────────────────────────────
 
+/**
+ * Create a 30-day access-request token containing the prospective user's info.
+ * Used to let an admin approve portal access via a signed link.
+ */
+export function signAccessRequestToken(data) {
+  return sign({ type: 'access_request', ...data, exp: Date.now() + 30 * 24 * 60 * 60 * 1000 });
+}
+
+/** Verify an access-request token. Returns the payload or null. */
+export function verifyAccessRequestToken(token) {
+  const payload = verify(token);
+  if (!payload || payload.type !== 'access_request') return null;
+  return payload;
+}
+
 /** Create a 5-minute OTP token. */
 export function signOtpToken(email, otp) {
   return sign({ type: 'otp', email, otp, exp: Date.now() + 5 * 60 * 1000 });
