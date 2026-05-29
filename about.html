@@ -48,6 +48,13 @@
       justify-content: center;
     }
     .placeholder-photo svg { width: 64px; height: 64px; stroke: #a0aec0; fill: none; stroke-width: 1; }
+    .team-photo {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
 
     @media (max-width: 900px) {
       .story-grid, .region-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -137,9 +144,7 @@
       <div class="team-grid">
 
         <div class="team-card reveal">
-          <div class="placeholder-photo">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
+          <img class="team-photo" src="images/don-campbell.jpg" alt="Don Campbell — Founder &amp; Senior Network Engineer">
           <div class="team-card-info">
             <h3>Don Campbell</h3>
             <span class="role">Founder &amp; Senior Network Engineer</span>
@@ -148,9 +153,7 @@
         </div>
 
         <div class="team-card reveal">
-          <div class="placeholder-photo">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
+          <img class="team-photo" src="images/brian-chavanne.jpg" alt="Brian Chavanne — Network Engineer">
           <div class="team-card-info">
             <h3>Brian Chavanne</h3>
             <span class="role">Network Engineer</span>
@@ -158,9 +161,7 @@
         </div>
 
         <div class="team-card reveal">
-          <div class="placeholder-photo">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
+          <img class="team-photo" src="images/bonnie-haley.jpg" alt="Bonnie Haley — Office Manager">
           <div class="team-card-info">
             <h3>Bonnie Haley</h3>
             <span class="role">Office Manager</span>
