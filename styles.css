@@ -336,4 +336,9 @@ h1, h2, h3 { line-height: 1.2; }
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; }
   .form-card { padding: 28px; }
+  /* Hide nav CTA on mobile — hero section has the primary CTAs */
+  .nav-right .btn { display: none; }
+  /* Tighten utility bar on small screens */
+  .utility-bar { padding: 6px 16px; }
+  .nav-bar { padding: 0 16px; }
 }
