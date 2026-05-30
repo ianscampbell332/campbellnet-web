@@ -323,6 +323,56 @@ h1, h2, h3 { line-height: 1.2; }
 .icon-sm { width: 16px; height: 16px; }
 .icon-xs { width: 12px; height: 12px; }
 
+/* HAMBURGER / MOBILE MENU */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: -8px;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--white);
+  border-top: 1px solid #e5e8f0;
+  padding: 8px 24px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu ul { list-style: none; margin: 0 0 20px; padding: 0; }
+.mobile-menu ul li a {
+  display: block;
+  padding: 13px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  border-bottom: 1px solid #f0f0ea;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.mobile-menu ul li:last-child a { border-bottom: none; }
+.mobile-menu ul li a:hover,
+.mobile-menu ul li a.active { color: var(--amber); }
+.mobile-menu .btn { width: 100%; text-align: center; box-sizing: border-box; }
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   section { padding: 48px 24px; }
@@ -332,13 +382,13 @@ h1, h2, h3 { line-height: 1.2; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .nav-right .btn { display: none; }
+  .nav-hamburger { display: flex; }
 }
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; }
   .form-card { padding: 28px; }
-  /* Hide nav CTA on mobile — hero section has the primary CTAs */
-  .nav-right .btn { display: none; }
-  /* Tighten utility bar on small screens */
   .utility-bar { padding: 6px 16px; }
   .nav-bar { padding: 0 16px; }
+  .mobile-menu { padding: 8px 16px 20px; }
 }
